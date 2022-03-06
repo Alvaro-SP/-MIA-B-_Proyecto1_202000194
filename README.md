@@ -5,25 +5,25 @@ administración de archivos, tanto en hardware como software, sistemas de archiv
   El curso de Manejo e Implementación de Archivos busca que los estudiantesaprendan los conceptos sobre la administración de archivos, tanto en hardware
 como software, sistemas de archivos, particiones, entre otros conceptos, así mismotrata que los estudiantes apliquen estos conceptos en el desarrollo de un proyectopara que así de esta manera puedan aprender cada uno de los temas impartidosdurante la clase magistral y el laboratorio para que luego se le pueda dar paso a losconocimientos que se impartirán en cursos posteriores como lo son las bases de datos.
 
-##Objetivos
-  ● Aprender a administrar archivos y escribir estructuras en C/C++
-  
-  ● Comprender el sistema de archivos EXT3 y EXT2
-  
-  ● Aplicar el formateo rápido y completo en una partición
-  
-  ● Crear una aplicación de comandos
-  
-  ● Aplicar la teoría de ajustes
-  
-  ● Aplicar la teoría de particiones
-  
-  ● Utilizar Graphviz para mostrar reportes
-  
-  ● Restringir y administrar el acceso a los archivos y carpetas en ext3/ext2 por  medio de usuarios
-  
-  ● Administrar los usuarios y permisos por medio de grupo
-  
+## Objetivos
+      ● Aprender a administrar archivos y escribir estructuras en C/C++
+
+      ● Comprender el sistema de archivos EXT3 y EXT2
+
+      ● Aplicar el formateo rápido y completo en una partición
+
+      ● Crear una aplicación de comandos
+
+      ● Aplicar la teoría de ajustes
+
+      ● Aplicar la teoría de particiones
+
+      ● Utilizar Graphviz para mostrar reportes
+
+      ● Restringir y administrar el acceso a los archivos y carpetas en ext3/ext2 por  medio de usuarios
+
+      ● Administrar los usuarios y permisos por medio de grupo
+
 
 ###Menú COMANDOS
 ● MKDISK: Este comando creará un archivo binario que simulará un disco duro, estos archivos binarios tendrán la extensión dk y su contenido al inicio será 0.
