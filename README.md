@@ -7,15 +7,23 @@ como software, sistemas de archivos, particiones, entre otros conceptos, así mi
 
 ##Objetivos
   ● Aprender a administrar archivos y escribir estructuras en C/C++
+  
   ● Comprender el sistema de archivos EXT3 y EXT2
+  
   ● Aplicar el formateo rápido y completo en una partición
+  
   ● Crear una aplicación de comandos
+  
   ● Aplicar la teoría de ajustes
+  
   ● Aplicar la teoría de particiones
+  
   ● Utilizar Graphviz para mostrar reportes
-  ● Restringir y administrar el acceso a los archivos y carpetas en ext3/ext2 por
-  medio de usuarios
+  
+  ● Restringir y administrar el acceso a los archivos y carpetas en ext3/ext2 por  medio de usuarios
+  
   ● Administrar los usuarios y permisos por medio de grupo
+  
 
 ###Menú COMANDOS
 ● MKDISK: Este comando creará un archivo binario que simulará un disco duro, estos archivos binarios tendrán la extensión dk y su contenido al inicio será 0.
