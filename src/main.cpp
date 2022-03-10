@@ -552,21 +552,16 @@ void analizer(string mylines) //todo este seria el analizador
 				}else if(mycommand == "pause"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.PAUSE.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
                     string ps;
-					cout<<"Presione enter para continuar....";
+					cout<<"Presione una tecla y enter para continuar....";
 							
                     cin >> ps;
                 
-				
-				
-				
-				
-				
-				}else if(mycommand == "unmount"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				}else if(mycommand == "mount"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					MOUNT montacion;
 
+				}else if(mycommand == "unmount"){
+					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				}else if(mycommand == "mkfs"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				}else if(mycommand == "rep"){
