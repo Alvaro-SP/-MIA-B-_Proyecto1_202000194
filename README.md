@@ -28,6 +28,9 @@ como software, sistemas de archivos, particiones, entre otros conceptos, así mi
     La aplicación es totalmente en consola, a excepción de los reportes en Graphviz. Esta no tendrá menús, sino que se utilizarán comandos. No distinguirá entre
     mayúsculas y minúsculas. Hay parámetros obligatorios y opcionales. Solo se puede colocar un comando por línea.
     
+       Se utilizarán espacios en blanco para separar cada parámetro. Si se necesita que algún valor lleve espacios en blanco se encerrará entre comillas " ". Los parámetros pueden venir en cualquier orden
+     
+     
 ###Menú COMANDOS
 ● MKDISK: Este comando creará un archivo binario que simulará un disco duro, estos archivos binarios tendrán la extensión dk y su contenido al inicio será 0.
 Deberá ocupar físicamente el tamaño indicado por los parámetros, (no importa que el sistema operativo no muestre el tamaño exacto).
