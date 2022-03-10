@@ -32,6 +32,7 @@ como software, sistemas de archivos, particiones, entre otros conceptos, así mi
      
      
 ###Menú COMANDOS
+
 ● MKDISK: Este comando creará un archivo binario que simulará un disco duro, estos archivos binarios tendrán la extensión dk y su contenido al inicio será 0.
 Deberá ocupar físicamente el tamaño indicado por los parámetros, (no importa que el sistema operativo no muestre el tamaño exacto).
 
