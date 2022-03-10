@@ -4,7 +4,7 @@
 
 mount::mount() {}
 
-MBR* mount::openMBR(char path[]){
+MBR* mount::obtainMBR(char path[]){
     FILE *myFile;
     myFile = fopen(path,"rb+");
     if(myFile!=NULL){
@@ -48,7 +48,9 @@ void mount::montar(mount *disk){
         strcpy(partsMounted[contador]->path,disk->path.c_str());
         partsMounted[contador]->letter = 65+contador; //manipulacion de mis letras usando los ASCII
     }
-    //MONTAR PARTICION
+    
+
+
     bool existPart = true;
     //! se hace instancia de los discos que estan montados 
     DISKMOUNT *mdisk = partsMounted[contador];
@@ -62,7 +64,7 @@ void mount::montar(mount *disk){
         contador2++;
     }
     //*Busco y abro el MBR desde la ruta del disco
-    MBR *disco = openMBR(mdisk->path);
+    MBR *disco = obtainMBR(mdisk->path);
     if(disco==NULL){
         return ;
     }
@@ -93,3 +95,59 @@ void mount::montar(mount *disk){
 }
 
 //! ███████████████████████████████████████████  UNMOUNT.  ██████████████████████████████████████████
+
+void mount::desmontar(char id[]){
+    string str(id);
+    //* SI la longitud del ID es menor a 4 eso significa de que no es correcto            
+    if(strlen(id)<4){
+        cout<<"FFFFFFFF No se ha encontrado el Disco a desmontar: ID incorrecto  FFFFFFF";
+        return;
+    }
+    // 94   +   Numero  +   Letra
+    char letra = str.at(3);
+    
+    int contDisks = 0;
+    bool existeDisco= false;
+    while(partsMounted[contDisks]!=NULL){
+        if(partsMounted[contDisks]->letter == letra){
+            existeDisco = true;
+            break;
+        }
+        contDisks++;
+    }
+    if(!existeDisco){
+        cout<<"FFFFF Error debido a que el disco no existe. FFFFFF";
+        return;
+    }
+
+
+    int tampart= 0;
+    bool existePart = true;
+    int contadorPart = 0;
+    
+    //! mientras las particiones montadas no sean vacias se aumenta el tamano de la particiones
+    while((partsMounted[contDisks])->parts[tampart]!=NULL){
+        tampart++;
+    }
+    //* recorro las particiones montadas y si encuentro una particion que coincida con el id entonces si existe.
+    while((partsMounted[contDisks])->parts[contadorPart]!=NULL){
+        if(strcmp((partsMounted[contDisks])->parts[contadorPart]->id,id)==0){
+            existePart = false;// si existe
+            break;
+        }
+        contadorPart++;
+    }
+    //! si existe entonces se va a eliminar esa montacion"""
+    if(!existePart){
+        delete (partsMounted[contDisks])->parts[contadorPart];
+        (partsMounted[contDisks])->parts[contadorPart] = NULL;
+        tampart--; // se disminuye el tamano de la particion.
+        //* Pero y si llego a 0?
+        
+    }else{
+        cout<<"FFFFFFF La particion se encuentra en estado DESMONTADA (No Montada) FFFFFFF";
+        return;
+    }
+    cout<<"\n Se ha desmontado la Particion con exito del disco"<<endl;
+    return;
+}
