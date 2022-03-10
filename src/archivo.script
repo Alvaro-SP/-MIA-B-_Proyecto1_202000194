@@ -1,0 +1,9 @@
+#ALVARO EMMANUEL SOCOP PEREZ
+#202000194
+#CREANDO EL DISCO VIRTUAL
+mkdisk -size=5000 -unit=k -path=/home/alvaro/DiscoPrueba1.dk
+#exec -path=path=/home/alvaro/archivo.script
+fdisk -size=1 -unit=M -path=/home/alvaro/DiscoPrueba1.dk -name=Particion_1
+fdisk -size=1 -unit=M -path=/home/alvaro/DiscoPrueba1.dk -name=Particion_2
+fdisk -size=1 -unit=M -path=/home/alvaro/DiscoPrueba1.dk -name=Particion_3
+fdisk -size=1 -unit=M -path=/home/alvaro/DiscoPrueba1.dk -name=Particion_4
