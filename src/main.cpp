@@ -579,12 +579,26 @@ void analizer(string mylines) //todo este seria el analizador
                         }
                     }
                     disco->montar(disco);
-                    cout << "-----------------------------------------" << endl;
-                    disco->mostrarMount();
-                    cout << "-----------------------------------------" << endl;
+                    
 
 				}else if(mycommand == "unmount"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					mount *disco = new mount();
+                    string idi;
+                    for (int k = 1; k < comandos.size(); k++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[k], '=');
+                        if ((comando[0]) == "-id")
+                        {
+                            idi = comando[1];
+
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+                    disco->desmontar(idi);
 				}else if(mycommand == "mkfs"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				}else if(mycommand == "rep"){
