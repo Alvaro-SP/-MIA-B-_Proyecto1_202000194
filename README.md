@@ -1,5 +1,5 @@
 # -MIA-B-_Proyecto1_202000194
-administración de archivos, tanto en hardware como software, sistemas de archivos, particiones etc,
+Administración de archivos, tanto en hardware como software, sistemas de archivos, particiones etc,
 
 ## 🥇🥇🥇🤗🤗🤗  Bienvenid@ a mi Proyecto #1  🤗🤗🤗🥇🥇🥇
   El curso de Manejo e Implementación de Archivos busca que los estudiantesaprendan los conceptos sobre la administración de archivos, tanto en hardware
