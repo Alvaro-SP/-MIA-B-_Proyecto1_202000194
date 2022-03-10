@@ -25,7 +25,9 @@ como software, sistemas de archivos, particiones, entre otros conceptos, así mi
       ● Administrar los usuarios y permisos por medio de grupo
 
 ##Aplicación de comandos
-
+    La aplicación es totalmente en consola, a excepción de los reportes en Graphviz. Esta no tendrá menús, sino que se utilizarán comandos. No distinguirá entre
+    mayúsculas y minúsculas. Hay parámetros obligatorios y opcionales. Solo se puede colocar un comando por línea.
+    
 ###Menú COMANDOS
 ● MKDISK: Este comando creará un archivo binario que simulará un disco duro, estos archivos binarios tendrán la extensión dk y su contenido al inicio será 0.
 Deberá ocupar físicamente el tamaño indicado por los parámetros, (no importa que el sistema operativo no muestre el tamaño exacto).
