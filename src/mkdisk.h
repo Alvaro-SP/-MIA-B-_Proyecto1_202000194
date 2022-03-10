@@ -51,13 +51,31 @@ struct MOUNT
 } ;
 
 //todo ████████████  Struct del DISKMOUNT  ████████████ 
+// struct DISKMOUNT
+// {
+//     string letra;
+//     string path; 
+//     vector<MOUNT> particiones;
+// } ;
 struct DISKMOUNT
 {
-    string letra;
-    string path; 
-    vector<MOUNT> particiones;
-} ;
+public:
+    char path[200];
+    char letter;
+    MountedPart *parts[60];
 
+    DISKMOUNT(){
+        int i;
+        for(i=0;i<60;i++)
+            parts[i]=NULL;
+    }
+} ;
+class MountedPart{
+public:
+    char name[75];
+    char id[10];
+    int start;
+};
 //todo ████████████  Struct MKDISK  ████████████ 
 
 

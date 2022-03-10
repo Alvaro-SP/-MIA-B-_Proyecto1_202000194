@@ -15,7 +15,10 @@ public:
     string name;//Indica el nombre de la partición a cargar.
    
     mount();
+    MBR* openMBR(char path[]);
+    char* obtainKey( int numero, char letra);
     void montar(mount *disk);
+    // void montar(char[],char[]);
     void mostrarMount();
     void desmontar(string id);
 };

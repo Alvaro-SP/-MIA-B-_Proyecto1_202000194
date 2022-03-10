@@ -10,6 +10,7 @@
 #include <string>
 #include <cstdlib>
 #include <dirent.h>
+#include "mount.cpp"
 #include <cstdio>
 #include <vector>
 #include <bits/stdc++.h>
@@ -558,7 +559,29 @@ void analizer(string mylines) //todo este seria el analizador
                 
 				}else if(mycommand == "mount"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
-					MOUNT montacion;
+					// MOUNT montacion;
+					mount *disco = new mount();
+                    string ruta;
+                    for (int k = 1; k < comandos.size(); k++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[k], '=');
+                        if ((comando[0]) == "-path")
+                        {
+                            disco->path = comando[1];
+                        }
+                        else if ((comando[0]) == "-name")
+                        {
+                            disco->name = comando[1];
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+                    disco->montar(disco);
+                    cout << "-----------------------------------------" << endl;
+                    disco->mostrarMount();
+                    cout << "-----------------------------------------" << endl;
 
 				}else if(mycommand == "unmount"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
