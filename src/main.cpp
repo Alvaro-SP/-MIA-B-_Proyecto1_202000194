@@ -610,6 +610,7 @@ void analizer(string mylines) //todo este seria el analizador
 
 					}else if(nombre=="disk"){
 						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP DISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						
 
 					}else if(nombre=="journaling"){
 						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP JOURNALING. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
