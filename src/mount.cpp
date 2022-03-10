@@ -27,6 +27,7 @@ char* mount::obtainKey( int numero, char letra){
     return &key[0];
 }
 
+//! ███████████████████████████████████████████  MOUNT.  ██████████████████████████████████████████
 void mount::montar(mount *disk){
     int contador = 0;
     bool existeono= false;
@@ -90,3 +91,5 @@ void mount::montar(mount *disk){
     cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, Bravho!!"<<endl;
     return ;
 }
+
+//! ███████████████████████████████████████████  UNMOUNT.  ██████████████████████████████████████████
