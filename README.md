@@ -24,6 +24,7 @@ como software, sistemas de archivos, particiones, entre otros conceptos, así mi
 
       ● Administrar los usuarios y permisos por medio de grupo
 
+##Aplicación de comandos
 
 ###Menú COMANDOS
 ● MKDISK: Este comando creará un archivo binario que simulará un disco duro, estos archivos binarios tendrán la extensión dk y su contenido al inicio será 0.
