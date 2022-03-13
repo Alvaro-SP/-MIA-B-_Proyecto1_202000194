@@ -56,7 +56,7 @@ MountedPart* mkfs::obtainMountedPart(string idi){
     }
     //! si existe entonces se va a eliminar esa montacion"""
     if(!existePart){
-        return partsMounted[contadorDiscos]->parts[contadorPart];
+        return partsMounted[contDisks]->parts[contadorPart];
         
         
     }else{
