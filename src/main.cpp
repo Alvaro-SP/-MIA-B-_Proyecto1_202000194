@@ -57,18 +57,28 @@ string quitarcomilla(string cad){
 string extractpath(string cad){
 	// cout<<"iniciando a extraer ruta."<<endl<<endl;
 	// int pos =cad.find(" ");
+	
 	string cadnew = "";
-	for (size_t i = 0; i < cad.size(); i++)
+	try
 	{
-		if (cad[i]=='\"')
+		for (size_t i = 0; i < cad.size(); i++)
 		{
-			break;
-		}else if(cad[i]==' '){
-			cadnew=cad.substr(i);
-		}else{
-			cadnew=cad;
+			if (cad[i]=='\"')
+			{
+				break;
+			}else if(cad[i]==' '){
+				cadnew=cad.substr(i);
+			}else{
+				cadnew=cad;
+			}
 		}
 	}
+	catch(...)
+	{
+		
+	}
+	
+	
 	return cadnew;
 }
 
@@ -210,15 +220,19 @@ vector<string> splitene(string myargument, char quitar) //todo solo simulo un sp
     string splitted;
     vector<string> comandos;
 
+	cout<<"\n\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"<<endl;
+				
     while (posFound >= 0)
     {
         posFound = myargument.find(quitar, posInit);
         splitted = myargument.substr(posInit, posFound - posInit);
         posInit = posFound + 1;
-        cout<<splitted<<endl;
+        // cout<<splitted<<endl;
         comandos.push_back(splitted);
     }
-
+	
+	cout<<"\n\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n"<<endl;
+	
     return comandos;
 
 
@@ -371,11 +385,9 @@ void analizer(string mylines) //todo este seria el analizador
 {
 	//primero lo que necesito hacer teniendo ya el archivo es separar las lineas
 	// si fuera el caso de que vengan muchas lineas, sino no.
-	cout<<"\n\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ MOSTRANDO EL ARCHIVO■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"<<endl;
-				
+			
 	vector<string> line = splitene(mylines, '\n'); //! estas serian mi array de lineas.
-	cout<<"\n\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ FIN ARCHIVO■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n"<<endl;
-				
+	
 	//luego de tener mis lineas ya separacas procedo a analizarlas
 	//! recorro mis lineas.
 	
@@ -778,8 +790,8 @@ int main()
 	
 	// Ciclo que se repite por cada comando ingresado
 	while(true){
-		// try
-		// {
+		try
+		{
 			string command;
 			string firstword;
 			string tem2;
@@ -795,26 +807,41 @@ int main()
 			{
 				cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.COMANDO EXEC EJECUTADO. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				// cout<<command2<<endl<<endl;
-				vector<string> myargument = splitSimulated5(command, '=');
-				// cout<<myargument[0]<<endl;
-				// cout<<myargument[1]<<endl;
-				tem2=myargument[1]; //! tomar solo la ruta
-				string cadena = abrir(extractpath(tem2));//! obtener texto del script
-				// cout<<cadena<<endl<<endl;
-				// analizer(wordmin(cadena));
-				// cout<<"hola"<<endl;
-				if(cadena!= " " || cadena!= "" || cadena!= "\n"||cadena!= "\r"){
+				try
+				{
+					vector<string> myargument = splitSimulated5(command, '=');
+					if(myargument.size()>1){
 
-					try {
-					// Block of code to try
-						analizer(wordmin(cadena)); //! obtengo el archivo SCRIPT en minusculas
-						// cout<<"Ejecute el comando exec si desea cargar un archivo";
-					// throw exception; // Throw an exception when a problem arise
+					
+					// cout<<myargument[0]<<endl;
+					// cout<<myargument[1]<<endl;
+					tem2=myargument[1]; //! tomar solo la ruta
+					string cadena = abrir(extractpath(tem2));//! obtener texto del script
+					// cout<<cadena<<endl<<endl;
+					// analizer(wordmin(cadena));
+					// cout<<"hola"<<endl;
+					if(cadena!= " " || cadena!= "" || cadena!= "\n"||cadena!= "\r"){
+
+						try {
+						// Block of code to try
+							analizer(wordmin(cadena)); //! obtengo el archivo SCRIPT en minusculas
+							// cout<<"Ejecute el comando exec si desea cargar un archivo";
+						// throw exception; // Throw an exception when a problem arise
+						}
+						catch (...) {
+						// Block of code to handle errors
+						}
 					}
-					catch (...) {
-					// Block of code to handle errors
+					}else{
+						cout<<"\nFFFFFFFFFF  ERROR DE COMANDO, VERIFIQUE QUE TENGA TODOS LOS PARAMETROS... FFFFFFFFF\n"<<endl;
 					}
 				}
+				catch(...)
+				{
+					
+				}
+				
+				
 				
 			}
 			else if((command) == "exit"){
@@ -841,12 +868,12 @@ int main()
 			}
 			// cout<<"end main."<<endl;
 
-		// }
-		// catch(...)
-		// {
-			
-		// }
 		
+	}
+	catch(...)
+	{
+		
+	}	
 		
 	}
 	cout<<"\n■■▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓Entendible, vuelva pronto.▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓■■\n\n"<<endl;
