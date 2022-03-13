@@ -2,7 +2,8 @@
 #include "v.h"
 #include "v.cpp"
 #include <cstdio>
-
+#include <cctype>
+#include <iostream>
 mount::mount() {}
 
 MBR* mount::obtainMBR(char path[]){
@@ -24,7 +25,8 @@ MBR* mount::obtainMBR(char path[]){
 char* mount::obtainKey( int numero, char letra){
     string key("94");
     key+=to_string(numero);
-    key+=letra;    
+    key+= char(tolower(letra));// 
+
     return &key[0];
 }
 
@@ -47,7 +49,7 @@ void mount::montar(mount *disk){
         //* Si no esta montada la particion se crea un montaje con sus atributos
         partsMounted[contador] = new DISKMOUNT();
         strcpy(partsMounted[contador]->path,disk->path.c_str());
-        partsMounted[contador]->letter = 65+contador; //manipulacion de mis letras usando los ASCII
+        partsMounted[contador]->letter = tolower(65+contador); //manipulacion de mis letras usando los ASCII
     }
     
 
@@ -79,10 +81,13 @@ void mount::montar(mount *disk){
             break;
         }
     }
+    string llave="";
     //! si hay una particion entonces se va a agregar una particion montada ...
     if(!existPart){
          mdisk->parts[contador2] = new MountedPart();
-         char *key=obtainKey(contador2, mdisk->letter);
+         
+         char *key=(obtainKey(contador2, mdisk->letter));
+         llave=key;
          strcpy(mdisk->parts[contador2]->id,key);
          strcpy(mdisk->parts[contador2]->name, disk->name.c_str());
          mdisk->parts[contador2]->start = init;
@@ -91,22 +96,23 @@ void mount::montar(mount *disk){
         return ;
     }
   
-    cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, Bravho!!"<<endl;
+    cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"Bravho!!"<<endl;
     return ;
 }
 
 //! ███████████████████████████████████████████  UNMOUNT.  ██████████████████████████████████████████
 
-void mount::desmontar(string idie){
-    char id[idie.length()];
+void mount::desmontar(string idi){
+    // char id[idie.length()];
  
-    int i;
-    for (i = 0; i < sizeof(id); i++) {
-        id[i] = idie[i];
-        // cout << id[i];
-    }
-    
+    // size_t i;
+    // for ( i = 0; i < sizeof(idie); i++) {
+    //     id[i] = idie[i];
+    //     // cout << id[i];
+    // }
+    char* id=&idi[0];
     string str(id);
+    cout<<" Id a Desmontar: " << str << endl;
     //* SI la longitud del ID es menor a 4 eso significa de que no es correcto            
     if(strlen(id)<4){
         cout<<"FFFFFFFF No se ha encontrado el Disco a desmontar: ID incorrecto  FFFFFFF";
@@ -114,10 +120,11 @@ void mount::desmontar(string idie){
     }
     // 94   +   Numero  +   Letra
     char letra = str.at(3);
-    
+    cout<<" La letra: "<<letra<<endl;
     int contDisks = 0;
     bool existeDisco= false;
     while(partsMounted[contDisks]!=NULL){
+        cout<<partsMounted[contDisks]->letter <<" con "<< letra<<endl;
         if(partsMounted[contDisks]->letter == letra){
             existeDisco = true;
             break;

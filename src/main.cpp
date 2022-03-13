@@ -11,11 +11,13 @@
 #include <cstdlib>
 #include <dirent.h>
 #include "mount.cpp"
+#include <cctype>
+// #include "mount.h"
 #include <cstdio>
 #include <vector>
 #include <bits/stdc++.h>
-// #include <stdio.h>
-// using namespace std;
+#include <stdio.h>
+using namespace std;
 // "/Downloads/OneDrive_1_2-4-2022/[MIA]HT1_202000194_Codigo/src" g++ -o src main.cpp
 
 using namespace std;
@@ -112,7 +114,7 @@ vector<string> splitSimulated5(string myargument, char quitar) //todo solo simul
 		{
 			temp=myargument;
 			mycommand.push_back(quitarcomilla(temp.substr(positioninitial, i - positioninitial)));
-			cout<<"-->"<<temp.substr(positioninitial, i - positioninitial)<<endl;
+			// cout<<"-->"<<temp.substr(positioninitial, i - positioninitial)<<endl;
 			positioninitial=i+1;
 			
 		}else if (myargument[i]=='\"' && entro==false)
@@ -124,7 +126,7 @@ vector<string> splitSimulated5(string myargument, char quitar) //todo solo simul
 				
 				temp=myargument;
 				mycommand.push_back(quitarcomilla(temp.substr(positioninitial, i - positioninitial)));
-				cout<<"-->"<<temp.substr(positioninitial, i - positioninitial)<<endl;
+				// cout<<"-->"<<temp.substr(positioninitial, i - positioninitial)<<endl;
 				positioninitial=i+2;
 				entro=false;
 				i++;
@@ -141,7 +143,7 @@ vector<string> splitSimulated5(string myargument, char quitar) //todo solo simul
 	
 	try{
 		mycommand.push_back(quitarcomilla(myargument.substr(positioninitial,temporalint - positioninitial)));
-		cout<<"-->"<<myargument.substr(positioninitial,temporalint - positioninitial)<<endl;
+		// cout<<"-->"<<myargument.substr(positioninitial,temporalint - positioninitial)<<endl;
 	}catch(...){}
 	
 	return mycommand;
@@ -276,13 +278,16 @@ vector<string> cleantext(vector<string> cad){
     vector<string> newtext;
     for (size_t i = 0; i < cad.size(); i++)
     {
+		// cad[i].erase(std::remove(cad[i].begin(), cad[i].end(), ' '), cad[i].end());
+		cad[i].erase(std::remove(cad[i].begin(), cad[i].end(), '\n'),cad[i].end());
+		cad[i].erase(std::remove(cad[i].begin(), cad[i].end(), '\r'),cad[i].end());
         if (cad[i][0] != (char)00)
         {
             if (cad[i][0] != '#')
             {
                 if (comment == false)
                 {
-					cout<<cad[i];
+					// cout<<cad[i];
                     newtext.push_back(cad[i]);
                 }
             }
@@ -366,17 +371,23 @@ void analizer(string mylines) //todo este seria el analizador
 {
 	//primero lo que necesito hacer teniendo ya el archivo es separar las lineas
 	// si fuera el caso de que vengan muchas lineas, sino no.
+	cout<<"\n\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ MOSTRANDO EL ARCHIVO■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"<<endl;
+				
 	vector<string> line = splitene(mylines, '\n'); //! estas serian mi array de lineas.
+	cout<<"\n\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ FIN ARCHIVO■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n"<<endl;
+				
 	//luego de tener mis lineas ya separacas procedo a analizarlas
 	//! recorro mis lineas.
 	
 	// cout<<line.size()<<endl;
 	for (size_t i = 0; i < line.size(); i++)
 	{
-
+		// line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
+		// line.erase(std::remove(line.begin(), line.end(), '\n'),line.end());
+		// line.erase(std::remove(line.begin(), line.end(), '\r'),line.end());
 		/* code */
 		if (line[i][0]=='#'){//* comentarios
-			cout<<"■■■ Comentario analizado:"<<line[i]<<endl;
+			cout<<"\n■■■ Comentario analizado:   "<<line[i]<<endl;
 		}
 		// cout<<line[i][0]<<endl;
 		if (line[i][0] != ' ')
@@ -392,12 +403,12 @@ void analizer(string mylines) //todo este seria el analizador
                 //comandos = unir_rutas(comandos);
 				// cout<<"marquita 3"<<endl;
 				bool sino = true;
-
+			
                 
 				
 			if(comandos.size()>0){
 				string mycommand = (comandos[0]);//!obtengo la primer instruccion.
-				mycommand.erase(std::remove(mycommand.begin(), mycommand.end(), ' '), mycommand.end());
+				// mycommand.erase(std::remove(mycommand.begin(), mycommand.end(), ' '), mycommand.end());
 				mycommand.erase(std::remove(mycommand.begin(), mycommand.end(), '\n'), mycommand.end());
 				mycommand.erase(std::remove(mycommand.begin(), mycommand.end(), '\r'), mycommand.end());
 				// cout<<"COMANDO RECONOCIDO: ("<<mycommand<<")"<<endl;
@@ -406,7 +417,7 @@ void analizer(string mylines) //todo este seria el analizador
 				// }
 				if (mycommand == "mkdisk")
                 {
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKDISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKDISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
                     mkdisk *disco = new mkdisk();
 					// cout<<"comandos.size():  "<<comandos.size()<<endl;
                     for (size_t j = 1; j < comandos.size(); j++) //!Recorro por toda mi linea
@@ -447,13 +458,13 @@ void analizer(string mylines) //todo este seria el analizador
 						
                         else
                         {
-                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                            cout << "\nEl comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
 
                     disco->createDisk(disco);
                 }else if(mycommand == "rmdisk"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.RMDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
+					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.RMDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
                     removedisk *disco = new removedisk();
 					/*Este parámetro elimina un archivo que representa a un disco duro mostrando
 						un mensaje de confirmación para eliminar. */
@@ -495,7 +506,7 @@ void analizer(string mylines) //todo este seria el analizador
 						Deberá mostrar un error si no se pudo realizar la operación solicitada sobre la
 						partición, especificando por qué razón no pudo crearse (Por espacio, por
 						restricciones de particiones, etc.).*/
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.FDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
+					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.FDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
                     Fdisk *disco = new Fdisk();
 
                     for (size_t j = 1; j < comandos.size(); j++)
@@ -551,14 +562,14 @@ void analizer(string mylines) //todo este seria el analizador
 					
 				
 				}else if(mycommand == "pause"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.PAUSE.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
+					cout<<"\n\n██████████████████████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.PAUSE.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓███████████████████████ "<<endl;
                     string ps;
 					cout<<"Presione una tecla y enter para continuar....";
 							
                     cin >> ps;
                 
 				}else if(mycommand == "mount"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\\nn███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					// MOUNT montacion;
 					mount *disco = new mount();
                     string ruta;
@@ -582,9 +593,9 @@ void analizer(string mylines) //todo este seria el analizador
                     
 
 				}else if(mycommand == "unmount"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					mount *disco = new mount();
-                    string idi;
+                    string idi="";
                     for (size_t k = 1; k < comandos.size(); k++)
                     {
                         vector<string> comando = splitSimulated5(comandos[k], '=');
@@ -598,12 +609,16 @@ void analizer(string mylines) //todo este seria el analizador
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
-					// char[] myChars = idi.toCharArray();
-                    disco->desmontar(idi);
+					idi.erase(std::remove(idi.begin(), idi.end(), ' '),  idi.end());
+					idi.erase(std::remove(idi.begin(), idi.end(), '\n'), idi.end());
+					idi.erase(std::remove(idi.begin(), idi.end(), '\r'), idi.end());
+					// char myChars = idi.toCharArray();
+					disco->desmontar(idi);
+                    // disco->desmontar(idi);
 				}else if(mycommand == "mkfs"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				}else if(mycommand == "rep"){
-					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					// string pathremove;
 					string nombre;
 					string idi;
@@ -644,35 +659,35 @@ void analizer(string mylines) //todo este seria el analizador
                     }
 					//! Luego de obtener los datos ingresados se procede a buscar que reporte es el que desea crear el usuario.
 					if(nombre=="mbr"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP MBR. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP MBR. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="disk"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP DISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP DISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 						
 
 					}else if(nombre=="journaling"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP JOURNALING. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP JOURNALING. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="block"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP BLOCK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP BLOCK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="bm_inode"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP BM_INODE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP BM_INODE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="bm_block"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP BM_BLOCK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP BM_BLOCK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="tree"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP TREE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP TREE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="sb"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP SB. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP SB. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="file"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP FILE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP FILE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}else if(nombre=="ls"){
-						cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP LS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP LS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 
 					}
 					
@@ -704,7 +719,7 @@ void analizer(string mylines) //todo este seria el analizador
 int main()
 {
 	//! RUN IN PC : 
-	//! 	1.	cd /home/alvaro/-MIA-B-_Proyecto1_202000194
+	//! 	1.	cd /home/alvaro/-MIA-B-_Proyecto1_202000194/src
 	//! 	2.	g++ main.cpp -o main
 	//! 	3.	./main
 	//todo █████████████████████████████████████ MENU PRINCIPAL.  ███████████████████████████████████████
@@ -727,7 +742,7 @@ int main()
 			string command;
 			string firstword;
 			string tem2;
-			cout<<"■■■■■◢◢  Ingrese su comando Sr. :  ";
+			cout<<"\n\n■■■■■◢◢  Ingrese su comando Sr. :  ";
 			// cin>>command;
 			getline(cin,command); //! el comando completo
 			command=wordmin(command);
@@ -737,6 +752,7 @@ int main()
 			// si es el comando EXEC 
 			if ((firstword) == "exec")
 			{
+				cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.COMANDO EXEC EJECUTADO. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 				// cout<<command2<<endl<<endl;
 				vector<string> myargument = splitSimulated5(command, '=');
 				// cout<<myargument[0]<<endl;
@@ -746,15 +762,19 @@ int main()
 				// cout<<cadena<<endl<<endl;
 				// analizer(wordmin(cadena));
 				// cout<<"hola"<<endl;
-				try {
-				// Block of code to try
-					analizer(wordmin(cadena)); //! obtengo el archivo SCRIPT en minusculas
-					// cout<<"Ejecute el comando exec si desea cargar un archivo";
-				// throw exception; // Throw an exception when a problem arise
+				if(cadena!= " " || cadena!= "" || cadena!= "\n"||cadena!= "\r"){
+
+					try {
+					// Block of code to try
+						analizer(wordmin(cadena)); //! obtengo el archivo SCRIPT en minusculas
+						// cout<<"Ejecute el comando exec si desea cargar un archivo";
+					// throw exception; // Throw an exception when a problem arise
+					}
+					catch (...) {
+					// Block of code to handle errors
+					}
 				}
-				catch (...) {
-				// Block of code to handle errors
-				}
+				
 			}
 			else if((command) == "exit"){
 				break;
@@ -770,7 +790,7 @@ int main()
 				try {
 				// Block of code to try
 					analizer(wordmin(command));
-					cout<<"------------>Ejecute el comando exec si desea cargar un archivo...";
+					cout<<"\n------------>Ejecute el comando exec si desea cargar un archivo...";
 				// throw exception; // Throw an exception when a problem arise
 				}
 				catch (...) {
@@ -778,7 +798,7 @@ int main()
 				}
 				
 			}
-			cout<<"end main."<<endl;
+			// cout<<"end main."<<endl;
 
 		// }
 		// catch(...)
@@ -788,6 +808,6 @@ int main()
 		
 		
 	}
-	cout<<"■■▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓Entendible, vuelva pronto.▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓■■"<<endl;
+	cout<<"\n■■▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓Entendible, vuelva pronto.▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓■■\n\n"<<endl;
 	return 0;
 }

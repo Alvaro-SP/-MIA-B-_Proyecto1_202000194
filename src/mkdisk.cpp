@@ -148,7 +148,7 @@ void mkdisk::createDisk(mkdisk *disco)
         cout << "FFFFFFFFF      LAS UNIDADES SON INCORRECTAS      FFFFFFFFF" << endl;
         return;
     }
-
+    cout<<"Tendra un tamano de : "<<disco->size<<disco->unit<<endl;
 
     //! ████████████  CREACION DEL MBR AL INICIO DEL DISCO  ████████████
     time_t tiempo = time(0);
@@ -185,7 +185,7 @@ void mkdisk::createDisk(mkdisk *disco)
         fwrite(&mbr, sizeof(MBR), 1, archivo); // e inserto el MBR.
         fclose(archivo);
         printf("\nSe inserto el MBR en el archivo!! :)");
-        cout << "El disco se creo en la ruta: \"" << disco->path << "\"" << endl;
+        cout << "\n\nEl disco se creo en la ruta: \"" << disco->path << "\"" << endl;
     }
     else
     {
@@ -206,7 +206,7 @@ vector<string> mkdisk::splitSimulated(string myargument, char quitar) // solo si
         palabra = myargument.substr(positioninitial, positionfound - positioninitial);
         positioninitial = positionfound + 1;
         mycommand.push_back(palabra);
-		cout<<palabra<<endl;
+		// cout<<palabra<<endl;
     }
     return mycommand;
 }

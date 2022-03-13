@@ -95,7 +95,7 @@ void Fdisk::adminPartition(Fdisk *disco)
                 {
                     if (disco->name.empty()!=true) //?validando el name
                     {
-                        cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.CREANDO UNA PARTICION.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
+                        cout<<"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■.CREANDO UNA PARTICION.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"<<endl;
                         CreatePartition(disco); //se crea
                     }else{
 
