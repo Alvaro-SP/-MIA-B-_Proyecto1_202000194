@@ -1,5 +1,6 @@
 #include "mount.h"
 #include "v.h"
+#include "v.cpp"
 #include <cstdio>
 
 mount::mount() {}
@@ -96,7 +97,15 @@ void mount::montar(mount *disk){
 
 //! ███████████████████████████████████████████  UNMOUNT.  ██████████████████████████████████████████
 
-void mount::desmontar(char id[]){
+void mount::desmontar(string idie){
+    char id[idie.length()];
+ 
+    int i;
+    for (i = 0; i < sizeof(id); i++) {
+        id[i] = idie[i];
+        // cout << id[i];
+    }
+    
     string str(id);
     //* SI la longitud del ID es menor a 4 eso significa de que no es correcto            
     if(strlen(id)<4){

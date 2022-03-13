@@ -562,7 +562,7 @@ void analizer(string mylines) //todo este seria el analizador
 					// MOUNT montacion;
 					mount *disco = new mount();
                     string ruta;
-                    for (int k = 1; k < comandos.size(); k++)
+                    for (size_t k = 1; k < comandos.size(); k++)
                     {
                         vector<string> comando = splitSimulated5(comandos[k], '=');
                         if ((comando[0]) == "-path")
@@ -585,7 +585,7 @@ void analizer(string mylines) //todo este seria el analizador
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					mount *disco = new mount();
                     string idi;
-                    for (int k = 1; k < comandos.size(); k++)
+                    for (size_t k = 1; k < comandos.size(); k++)
                     {
                         vector<string> comando = splitSimulated5(comandos[k], '=');
                         if ((comando[0]) == "-id")
@@ -598,6 +598,7 @@ void analizer(string mylines) //todo este seria el analizador
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
+					// char[] myChars = idi.toCharArray();
                     disco->desmontar(idi);
 				}else if(mycommand == "mkfs"){
 					cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
@@ -702,6 +703,10 @@ void analizer(string mylines) //todo este seria el analizador
 //! █████████████████████████████████████████████    MAIN PRINCIPAL.   ██████████████████████████████████████████
 int main()
 {
+	//! RUN IN PC : 
+	//! 	1.	cd /home/alvaro/-MIA-B-_Proyecto1_202000194
+	//! 	2.	g++ main.cpp -o main
+	//! 	3.	./main
 	//todo █████████████████████████████████████ MENU PRINCIPAL.  ███████████████████████████████████████
 	cout<<" ◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_"<<endl;
 	cout<<" ◣_◢ ◣_◢ ALVARO EMMANUEL SOCOP PEREZ - 202000194  ◣_◢ ◣_◢"<<endl;
@@ -765,7 +770,7 @@ int main()
 				try {
 				// Block of code to try
 					analizer(wordmin(command));
-					cout<<"Ejecute el comando exec si desea cargar un archivo";
+					cout<<"------------>Ejecute el comando exec si desea cargar un archivo...";
 				// throw exception; // Throw an exception when a problem arise
 				}
 				catch (...) {

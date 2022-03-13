@@ -49,7 +49,12 @@ struct MOUNT
     PARTITION particion;
     EBR particionL;
 } ;
-
+class MountedPart{
+public:
+    char name[75];
+    char id[10];
+    int start;
+};
 //todo ████████████  Struct del DISKMOUNT  ████████████ 
 // struct DISKMOUNT
 // {
@@ -66,16 +71,13 @@ public:
 
     DISKMOUNT(){
         int i;
-        for(i=0;i<60;i++)
+        for(i=0;i<60;i++){
             parts[i]=NULL;
+        }
+            
     }
 } ;
-class MountedPart{
-public:
-    char name[75];
-    char id[10];
-    int start;
-};
+
 //todo ████████████  Struct MKDISK  ████████████ 
 
 

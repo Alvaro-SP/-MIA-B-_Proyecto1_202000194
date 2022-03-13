@@ -23,6 +23,7 @@ void Fdisk::adminPartition(Fdisk *disco)
             {
                 if (disco->name.empty()!=true) //?validando el name
                 {
+                    cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.EXTENDIENDO UNA PARTICION.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
                     ExtendPartition(disco); //se extiende
                 }else{
 
@@ -63,6 +64,7 @@ void Fdisk::adminPartition(Fdisk *disco)
 
                 if (disco->name.empty()!=true) //?validando el name
                 {
+                    cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.ELIMINANDO UNA PARTICION.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
                     DeletePartition(disco); //! se elimina
                 }else{
 
@@ -93,6 +95,7 @@ void Fdisk::adminPartition(Fdisk *disco)
                 {
                     if (disco->name.empty()!=true) //?validando el name
                     {
+                        cout<<"███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.CREANDO UNA PARTICION.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
                         CreatePartition(disco); //se crea
                     }else{
 
