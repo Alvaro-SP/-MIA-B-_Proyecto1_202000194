@@ -1,6 +1,5 @@
 #include "mount.h"
 #include "v.h"
-#include "v.cpp"
 #include <cstdio>
 #include <cctype>
 #include <iostream>
@@ -37,7 +36,6 @@ void mount::montar(mount *disk){
     
    //* VALIDACION SI EXISTE LA PARTICION DENTRO DE LAS QUE YA ESTAN MONTADAS
     while(partsMounted[contador]!=NULL){
-
         
         if(strcmp(partsMounted[contador]->path, disk->path.c_str() )==0){
             existeono = true;
@@ -108,8 +106,9 @@ void mount::desmontar(string idi){
     // size_t i;
     // for ( i = 0; i < sizeof(idie); i++) {
     //     id[i] = idie[i];
-    //     // cout << id[i];
+    //    // cout << id[i];
     // }
+    //*--------
     char* id=&idi[0];
     string str(id);
     cout<<" Id a Desmontar: " << str << endl;
@@ -159,6 +158,9 @@ void mount::desmontar(string idi){
         (partsMounted[contDisks])->parts[contadorPart] = NULL;
         tampart--; // se disminuye el tamano de la particion.
         //* Pero y si llego a 0?
+        if(tampart == 0){
+            
+        }
         
     }else{
         cout<<"FFFFFFF La particion se encuentra en estado DESMONTADA (No Montada) FFFFFFF";

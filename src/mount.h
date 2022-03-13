@@ -6,7 +6,7 @@
 #include "Fdisk.h"
 
 
-using namespace std;
+// using namespace std;
 class mount
 {
 public:

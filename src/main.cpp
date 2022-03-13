@@ -4,6 +4,7 @@
 #include "mkdisk.cpp"
 #include "removedisk.cpp"
 #include "Fdisk.cpp"
+#include "mkfs.cpp"
 #include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +21,6 @@
 using namespace std;
 // "/Downloads/OneDrive_1_2-4-2022/[MIA]HT1_202000194_Codigo/src" g++ -o src main.cpp
 
-using namespace std;
 //! █████████████████████████████████████████████     BIENVENIDOS.    ██████████████████████████████████████████
 //! BIENVENIDO A MI PROYECTO No 1. LECTOR DE COMANDOS Y ADMINISTRADOR DE ARCHIVOS
 //*  La aplicación será totalmente en consola, a excepción de los reportes en Graphviz.
@@ -617,6 +617,47 @@ void analizer(string mylines) //todo este seria el analizador
                     // disco->desmontar(idi);
 				}else if(mycommand == "mkfs"){
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					// Este comando realiza un formateo completo de la partición, se formateará como
+					// ext2 por defecto si en caso el parámetro fs no está definido.
+					// También creará un archivo en la raíz llamado users.txt que tendrá los usuarios y 
+					// contraseñas del sistema de archivos.
+					mkfs *disco = new mkfs();
+                    for (size_t j = 1; j < comandos.size(); j++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[j], '=');
+						/*-size	Obligatorio	
+						Este parámetro recibirá un número que indicará el tamaño
+						del disco a crear. Debe ser positivo y mayor que cero, si no
+						se mostrará un error.*/
+						if (comando[0] == "-id")
+                        {   /*/*Este parámetro recibirá un número que indicará el tamañode la partición 
+							a crear. */
+                            disco->id = (comando[1]);
+                        }//
+						else if (comando[0] == "-fs")
+                        {	/*Este parámetro recibirá una letra que indicará las unidades
+							que utilizará el parámetro size. */
+                            disco->fs = comando[1];
+                        }
+						else if (comando[0] == "-type")
+                        {// Indicará que tipo de partición se creará.*/
+                            disco->type = comando[1];
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+					try
+					{
+						disco->formato(disco);
+					}
+					catch(...)
+					{
+						cout<<"no se pudo ejecutar el MKFS"<<endl;
+					}
+					
+
 				}else if(mycommand == "rep"){
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					// string pathremove;
