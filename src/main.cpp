@@ -3,6 +3,7 @@
 #include <string.h>
 #include "mkdisk.cpp"
 #include "removedisk.cpp"
+#include "rep.cpp"
 #include "Fdisk.cpp"
 #include "mkfs.cpp"
 #include <cstdlib>
@@ -13,12 +14,16 @@
 #include <dirent.h>
 #include "mount.cpp"
 #include <cctype>
+#include <iomanip>
+#include <stdlib.h>
+#include <unistd.h>
 // #include "mount.h"
 #include <cstdio>
 #include <vector>
 #include <bits/stdc++.h>
 #include <stdio.h>
 using namespace std;
+
 // "/Downloads/OneDrive_1_2-4-2022/[MIA]HT1_202000194_Codigo/src" g++ -o src main.cpp
 
 //! █████████████████████████████████████████████     BIENVENIDOS.    ██████████████████████████████████████████
@@ -581,7 +586,7 @@ void analizer(string mylines) //todo este seria el analizador
                     cin >> ps;
                 
 				}else if(mycommand == "mount"){
-					cout<<"\\nn███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					// MOUNT montacion;
 					mount *disco = new mount();
                     string ruta;
@@ -675,10 +680,10 @@ void analizer(string mylines) //todo este seria el analizador
 					// string pathremove;
 					string nombre;
 					string idi;
-					string rutatemp;
+					string rutaReport;
 					string path;
 					sino=true;
-                    
+                    rep *myreps = new rep();
 					for (size_t j = 1; j < comandos.size(); j++) //!Recorro por toda mi linea
                     {
                         vector<string> comando = splitSimulated5(comandos[j], '=');
@@ -689,7 +694,7 @@ void analizer(string mylines) //todo este seria el analizador
 						if (comando[0] == "-name")
                         {
 							// stoi convierte a int
-                            nombre = stoi(comando[1]);
+                            nombre = (comando[1]);
                         }else if (comando[0] == "-id")
                         {/*Indicará el ajuste que utilizará el disco para crear las
 							particiones dentro del disco Podrá tener los siguientes
@@ -700,7 +705,7 @@ void analizer(string mylines) //todo este seria el analizador
 							que utilizará el parámetro size. Podrá tener los siguientes
 							valores:
 							*/
-                            rutatemp = comando[1];
+                            rutaReport = comando[1];
                         }else if (comando[0] == "-path")
                         {	/*Este parámetro será la ruta en el que se creará el archivo
 							que representará el disco duro*/
@@ -713,7 +718,7 @@ void analizer(string mylines) //todo este seria el analizador
 					//! Luego de obtener los datos ingresados se procede a buscar que reporte es el que desea crear el usuario.
 					if(nombre=="mbr"){
 						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP MBR. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
-
+						myreps->mbr(nombre, idi, path, rutaReport);
 					}else if(nombre=="disk"){
 						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP DISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 						
@@ -744,7 +749,7 @@ void analizer(string mylines) //todo este seria el analizador
 
 					}
 					
-
+					
 
 
 				}else{
@@ -795,6 +800,7 @@ int main()
 			string command;
 			string firstword;
 			string tem2;
+			
 			cout<<"\n\n■■■■■◢◢  Ingrese su comando Sr. :  ";
 			// cin>>command;
 			getline(cin,command); //! el comando completo

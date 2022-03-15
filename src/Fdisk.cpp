@@ -397,15 +397,18 @@ bool Fdisk::StateInactiveCreate(int i, int espacio_disp, MBR mbr, int p_gen_tam,
             //!particiones dentro del disco Podrá tener los siguientes valores:
             if (disco->fit == "b" || disco->fit == "bf"  ) //Indicará el mejor ajuste (Best Fit)
             {
-                strcpy(mbr.disk_fit, "b");
+                mbr.mbr_p[i].part_fit = 'b';
+                // strcpy(mbr.mbr_p[i].part_fit, 'b');
                 cout<<"Indicará el mejor ajuste (Best Fit)"<<endl;
             }else if(disco->fit == "f" || disco->fit == "ff")
             {
+                mbr.mbr_p[i].part_fit = 'f';
                 cout<<"Utilizará el primer ajuste (First Fit)"<<endl;
-                strcpy(mbr.disk_fit, "f");
+                // strcpy(mbr.mbr_p[i].disk_fit, "f");
             }else if(disco->fit == "w" || disco->fit == "wf" || disco->unit.empty())
             {
-                strcpy(mbr.disk_fit, "wf");
+                mbr.mbr_p[i].part_fit = 'w';
+                // strcpy(mbr.mbr_p[i].disk_fit, "wf");
                 cout<<"Utilizará el peor ajuste (Worst Fit)"<<endl;
             }else
             {
@@ -635,7 +638,7 @@ void Fdisk::CreatePartition(Fdisk *disco)
 
         if (!p_existe)//* si existe la particion
         {
-            cout<<""<<nopart;
+            // cout<<""<<nopart;
 
             // Busco su EBR
             //* y creo la unidad logica si asi fuera el caso de la creacion de particioners.........

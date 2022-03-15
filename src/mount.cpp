@@ -93,7 +93,25 @@ void mount::montar(mount *disk){
         cout<<"FFFFFFFFF Error al montar la particion, porque la particion "<<disk->name<<" No Existe  FFFFFFFFF"<<endl;
         return ;
     }
-  
+    // FILE *myarchivo = fopen("GenPartitions.bin", "ab");
+
+	// if (myarchivo)
+	// {
+	// 	struct GenPartition t1;
+    //     t1.id=llave;
+    //     t1.ruta= disk->path;
+		
+
+	// 	// fseek(myarchivo,linea,SEEK_END);
+	// 	// fwrite( el apuntador,sizeof(tamanoDeVariable), ElementosAInsertar,myarchivo);
+	// 	fwrite(&t1, sizeof(struct GenPartition), 1, myarchivo);
+	// 	fclose(myarchivo);
+	// 	cout<<"\nSe inserto la estructura GenPartition en el archivo!! :)"<<endl;
+	// }
+	// else
+	// {
+	// 	cout<<"\nno se pudo crear hay algun dato malo.\n"<<endl;
+	// };
     cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"Bravho!!"<<endl;
     return ;
 }

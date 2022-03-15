@@ -3,6 +3,12 @@
         "iostream": "cpp",
         "*.tcc": "cpp",
         "cctype": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp"
     }
 }

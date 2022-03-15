@@ -78,8 +78,13 @@ public:
     }
 } ;
 
-//todo ████████████  Struct MKDISK  ████████████ 
-
+//todo ████████████  Struct PARTITIONS GENERALES  ████████████ 
+struct GenPartition{
+    // string ruta;
+    // string id;
+    char ruta[100];
+	char id[6];
+};
 
 //todo ████████████  MKDISK CONSTRUCTOR  ████████████ 
 class mkdisk

@@ -1,0 +1,104 @@
+digraph migraph{
+     bgcolor="yellow:cyan"     gradientangle=0    label="mbr en: /home/alvaro/otracarpeta/prueba/disco generado 60mb 2.png"    fontcolor="black"    fontname="Helvetica,Arial,sans-serif"
+
+tbl [
+shape=plaintext
+ label=<
+<table border='0' cellborder='1' cellspacing='0'>
+<tr><td colspan="3" bgcolor="blue:cyan">REPORTE DE MBR</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="lightblue">mbr_tamaño</td><td bgcolor="lightblue">62914560</td></tr>
+<tr><td bgcolor="lightblue">mbr_Fecha_creación</td><td bgcolor="lightblue">14/03/22 22:02:</td></tr>
+<tr><td bgcolor="lightblue">mbr_disk_signature</td><td bgcolor="lightblue">1804289383</td></tr>
+<tr><td bgcolor="lightblue">mbr_disk_fit</td><td bgcolor="lightblue">ff</td></tr>
+<tr><td colspan="2" bgcolor="#bcf7c1">part1</td></tr>
+<tr><td bgcolor="#bcf7c1">part_status</td><td bgcolor="#bcf7c1">1</td></tr>
+<tr><td bgcolor="#bcf7c1">part_type</td><td bgcolor="#bcf7c1">P</td></tr>
+<tr><td bgcolor="#bcf7c1">part_fit</td><td bgcolor="#bcf7c1">f</td></tr>
+<tr><td bgcolor="#bcf7c1">part_start</td><td bgcolor="#bcf7c1">140</td></tr>
+<tr><td bgcolor="#bcf7c1">part_size</td><td bgcolor="#bcf7c1">5242880</td></tr>
+<tr><td bgcolor="#bcf7c1">part_name</td><td bgcolor="#bcf7c1">part1</td></tr>
+<tr><td colspan="2" bgcolor="#f8fc92">part2</td></tr>
+<tr><td bgcolor="#f8fc92">part_status</td><td bgcolor="#f8fc92">1</td></tr>
+<tr><td bgcolor="#f8fc92">part_type</td><td bgcolor="#f8fc92">P</td></tr>
+<tr><td bgcolor="#f8fc92">part_fit</td><td bgcolor="#f8fc92">f</td></tr>
+<tr><td bgcolor="#f8fc92">part_start</td><td bgcolor="#f8fc92">280</td></tr>
+<tr><td bgcolor="#f8fc92">part_size</td><td bgcolor="#f8fc92">5242880</td></tr>
+<tr><td bgcolor="#f8fc92">part_name</td><td bgcolor="#f8fc92">part2</td></tr>
+<tr><td colspan="2" bgcolor="#fcc292">part4</td></tr>
+<tr><td bgcolor="#fcc292">part_status</td><td bgcolor="#fcc292">1</td></tr>
+<tr><td bgcolor="#fcc292">part_type</td><td bgcolor="#fcc292">e</td></tr>
+<tr><td bgcolor="#fcc292">part_fit</td><td bgcolor="#fcc292">f</td></tr>
+<tr><td bgcolor="#fcc292">part_start</td><td bgcolor="#fcc292">560</td></tr>
+<tr><td bgcolor="#fcc292">part_size</td><td bgcolor="#fcc292">15728640</td></tr>
+<tr><td bgcolor="#fcc292">part_name</td><td bgcolor="#fcc292">part4</td></tr>
+<tr><td colspan="3">part6</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">f</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">592</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">1048576</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">1049168</td></tr>
+<tr><td colspan="3">part7</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">f</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">1049200</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">1048576</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">2097776</td></tr>
+<tr><td colspan="3">part8</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">f</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">2097808</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">1048576</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">3146384</td></tr>
+<tr><td colspan="3">part9</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">f</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">3146416</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">1048576</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">4194992</td></tr>
+<tr><td colspan="3">part10</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">f</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">4195024</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">1048576</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">5243600</td></tr>
+<tr><td colspan="3">part11</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">f</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">5243632</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">3145728</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">8389360</td></tr>
+<tr><td colspan="3"></td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#fcc8c8">part_status</td><td bgcolor="#fcc8c8">0</td></tr>
+<tr><td bgcolor="#fcc8c8">part_fit</td><td bgcolor="#fcc8c8">-</td></tr>
+<tr><td bgcolor="#fcc8c8">part_start</td><td bgcolor="#fcc8c8">-1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_size</td><td bgcolor="#fcc8c8">-1</td></tr>
+<tr><td bgcolor="#fcc8c8">part_next</td><td bgcolor="#fcc8c8">-1</td></tr>
+</table>
+>];
+
+
+
+tbl [
+shape=plaintext
+ label=<
+<table border='0' cellborder='1' cellspacing='0'>
+<tr><td colspan="3">REPORTE DE EBRS</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td colspan="3">part4</td></tr>
+<tr><td bgcolor="#bcf7c1">part_status</td><td bgcolor="#bcf7c1">1</td></tr>
+<tr><td bgcolor="#bcf7c1">part_type</td><td bgcolor="#bcf7c1">e</td></tr>
+<tr><td bgcolor="#bcf7c1">part_fit</td><td bgcolor="#bcf7c1">f</td></tr>
+<tr><td bgcolor="#bcf7c1">part_start</td><td bgcolor="#bcf7c1">560</td></tr>
+<tr><td bgcolor="#bcf7c1">part_size</td><td bgcolor="#bcf7c1">15728640</td></tr>
+<tr><td bgcolor="#bcf7c1">part_name</td><td bgcolor="#bcf7c1">part4</td></tr>
+</table>
+>];
+}
