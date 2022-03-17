@@ -812,15 +812,44 @@ void Fdisk::deleteFull(FILE *archivo, int pos){
     fwrite(&ebr, sizeof(EBR), 1, archivo);
     cout << "Se ha eliminado la particion " << ebr.part_name << " completamente." << endl;
 }
-
+MBR* Fdisk::obtainMBR(char path[]){
+    FILE *myFile;
+    myFile = fopen(path,"rb+");
+    if(myFile!=NULL){
+        
+    }else{
+        cout<<"FFFFFFF no se encuentra el disco FFFFFF\n";
+        return NULL;
+    }
+    fseek(myFile, 0, SEEK_SET);
+    MBR *mbr = (MBR*)malloc(sizeof(MBR));
+    fread(mbr,sizeof(MBR),1,myFile);
+    fclose(myFile);
+    return mbr;
+}
 //! ██████████████████████████████████████████████  SE ELIMINA LA PARTICION.  ██████████████████████████████████████████
 void Fdisk::DeletePartition(Fdisk *disco)
 {
+    if(disco==NULL){
+        return ;
+    }
+
     FILE *archivo;
     archivo = fopen(disco->path.c_str(), "rb+");
-    MBR *mbr;
+    if(archivo!=NULL){
+        
+    }else{
+        cout<<"FFFFFFF no se encuentra el disco FFFFFF\n";
+        return;
+    }
+
+    // MBR *mbr= obtainMBR(disco->path.c_str());
+
     fseek(archivo, 0, SEEK_SET);
-    fread(&mbr, sizeof(MBR), 1, archivo);
+    MBR *mbr = (MBR*)malloc(sizeof(MBR));
+    fread(mbr,sizeof(MBR),1,archivo);
+    fclose(archivo);
+    
 
     //* Si la partición no existe deberá mostrar error. 
 
@@ -959,19 +988,26 @@ void Fdisk::DeletePartition(Fdisk *disco)
                     while(ebr!=NULL){
                         //  if ebr->part_name == disco->name)
                         if(strcmp(ebr->part_name,disco->name.c_str())==0){
-                            
-                            EBR *newebr;
+                            int init=ebr->part_start;
+                            EBR *newebr=(EBR*)malloc(sizeof(EBR));
                             newebr->part_fit = '-';
                             newebr->part_next = -1;
                             newebr->part_size = -1;
                             newebr->part_start = -1;
                             newebr->part_status = '0';
                             newebr->part_name[0] = '\0';
-
+                            int inicio=part.part_start; 
                             ebr=newebr;
                             //!█████████████████ rellena el espaciocon el carácter \0 █████████████████
-
-
+                            // int pos=searchLogicPartitionsDelete(disco, archivo, inicio);
+                            // if (pos == -1)
+                            // {
+                                
+                            // }else{
+                                deleteFull(archivo, init);
+                                fclose(archivo);
+                            // }
+                            // deleteFull();
 
                             eliminada=true;                            
                             break;
@@ -1047,7 +1083,9 @@ void Fdisk::DeletePartition(Fdisk *disco)
         
         if(eliminada==false){
             //! Si la partición no existe deberá mostrar error. 
-            cout<<"FFFFFFFFF   No se ha encontrado la particion a eliminar, verifique el nombre y ruta  FFFFFFFFF"<<endl;
+            cout<<"FFFFFFFFF   No se ha encontrado la particion a eliminar, verifique el nombre y ruta o talvez ya la borro! FFFFFFFFF"<<endl;
+        }else{
+            cout<<"\n         Se ha eliminado la Particion "<<disco->name<<endl;
         }
     }
     else

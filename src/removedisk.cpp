@@ -46,7 +46,7 @@ void removedisk::removeDisco(string pathnew)
     }
     catch(...)
     {
-        cout << "Verifique la ruta: \'" << pathnew << "\'... Porque no se encontro :/"<< endl;
+        cout << "Verifique la ruta: \'" << pathnew << "\'... Porque no se encontro  DISCO NO EXISTENTE:/"<< endl;
     }
     
 }

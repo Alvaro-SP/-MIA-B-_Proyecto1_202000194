@@ -1,7 +1,7 @@
 digraph migraph{
      bgcolor="yellow:yellow3"    
  gradientangle=0   
- label="disk en: /home/alvaro/otracarpeta/prueba/reporte disk 941a.png"  
+ label="disk en: /home/mia/reportes/disco1.jpg"  
   fontcolor="black"  
   fontname="Helvetica,Arial,sans-serif"
  subgraph cluster1 {
@@ -10,6 +10,6 @@ digraph migraph{
  fontcolor="white"
  style="filled"
   node[shape=record fillcolor="red:yellow" style="filled" gradientangle=90]
- nod[label="MBR \n | Primaria \n 40%| { Extendida \n 50% | {EBR | Logica \n10% |Libre40% | } } | Libre \n 10%" ];
+ nod[label="MBR \n | { Extendida \n 16% | {Libre16% | } } | No utilizable \n 84%" ];
 }
 }

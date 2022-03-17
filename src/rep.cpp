@@ -644,7 +644,8 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
 
     fclose (myFile);
     string pathString(path);
-    string command = "dot -Tpng REPORTE_MBR_202000194.dot -o \""+pathString+"\"";
+    string tipodesalida=pathString.substr(pathString.size()-3, pathString.size());
+    string command = "dot -T"+tipodesalida+" REPORTE_MBR_202000194.dot -o \""+pathString+"\"";
     system(command.c_str());
     cout<<"\n Generando la imagen..."<<endl;
     sleep(2);
@@ -1338,7 +1339,8 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
 
         fclose (myFile);
         string pathString(path);
-        string command = "dot -Tpng REPORTE_DISKS_202000194.dot -o \""+pathString+"\"";
+        string tipodesalida=pathString.substr(pathString.size()-3, pathString.size());
+        string command = "dot -T"+tipodesalida+" REPORTE_DISKS_202000194.dot -o \""+pathString+"\"";
         system(command.c_str());
         cout<<"\n Generando la imagen..."<<endl;
         sleep(2);

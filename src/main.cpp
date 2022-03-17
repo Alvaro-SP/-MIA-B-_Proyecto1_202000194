@@ -801,13 +801,12 @@ int main()
 	cout<<"					 ◣_◢ ◣_◢       ╔═════════════════════════╗        ◣_◢ ◣_◢"<<endl;
 	cout<<"					 ◣_◢ ◣_◢       ║BIENVENIDO A MI PROYECTO!║        ◣_◢ ◣_◢"<<endl;
 	cout<<"					 ◣_◢ ◣_◢       ╚═════════════════════════╝        ◣_◢ ◣_◢"<<endl;
-	cout<<"					             ıllıllı (Alvaro Socop) ıllıllı 				"<<endl;
+	cout<<"					             ıllıllı (Alvaro Socop) ıllıllı 			 "<<endl;
 	cout<<"					 ...,,ø¤º°`°º¤ø,¸( LAB. ARCHIVOS B )°º¤ø,¸¸,ø¤º°``''...  "<<endl;
-	cout<<"																				"<<endl;
+	cout<<"																			 "<<endl;
 	cout<<"					                [̲̅F̲̅][̲̅I̲̅][̲̅U][̲̅S][̲̅A][̲̅C̲̅]              "<<endl<<endl;
 	cout<<"					---------------------------------------------------------"<<endl<<endl;
 	   
-	
 	// Ciclo que se repite por cada comando ingresado
 	while(true){
 		try
