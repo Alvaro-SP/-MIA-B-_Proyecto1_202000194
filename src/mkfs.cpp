@@ -20,14 +20,14 @@ MountedPart* mkfs::obtainMountedPart(string idi){
         return NULL;
     }
     // 94   +   Numero  +   Letra
-    char letra = str.at(3);
+    char num = str.at(2);
 
-
+    string s(1, num);
     int contDisks = 0;
     bool existeDisco= false;
     while(partsMounted[contDisks]!=NULL){
-        cout<<partsMounted[contDisks]->letter <<" con "<< letra<<endl;
-        if(partsMounted[contDisks]->letter == letra){
+        cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
+        if(partsMounted[contDisks]->num == stoi(s)){
             existeDisco = true;
             break;
         }
@@ -75,13 +75,13 @@ DISKMOUNT* mkfs::obtainMountedDisk(string idi){
     }
 
     // 94   +   Numero  +   Letra
-    char letra = str.at(3);
-
+    char num = str.at(2);
+    string s(1, num);
     int contDisks = 0;
     bool existeDisco= true;
     while(partsMounted[contDisks]!=NULL){
-        cout<<partsMounted[contDisks]->letter <<" con "<< letra<<endl;
-        if(partsMounted[contDisks]->letter == letra){
+        cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
+        if(partsMounted[contDisks]->num == stoi(s)){
             existeDisco = false;
             break;
         }

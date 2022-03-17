@@ -66,7 +66,7 @@ struct DISKMOUNT
 {
 public:
     char path[200];
-    char letter;
+    int num;
     MountedPart *parts[60];
 
     DISKMOUNT(){

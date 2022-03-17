@@ -22,6 +22,7 @@ public:
     // int searchLogicPartitionsDelete(Fdisk *disco, FILE *archivo, int inicio);
     EBR createnewEBR();   
     void CreatePartition(Fdisk *disco);
+    EBR* primerEBR(MBR *disco,string paths);
     void ExtendPartition(Fdisk *disco);
     void deleteFast(FILE *archivo, int pos);
     void deleteFull(FILE *archivo, int pos);

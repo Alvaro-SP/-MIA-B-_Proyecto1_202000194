@@ -16,6 +16,7 @@ public:
    
     mount();
     MBR* obtainMBR(char path[]);
+    EBR* primerEBR(MBR *disco,string paths);
     void desmontar(char id[]);
     char* obtainKey( int numero, char letra);
     void montar(mount *disk);

@@ -95,15 +95,15 @@ void mkdisk::createDisk(mkdisk *disco)
     //! ████████████  VALIDACION DE FIT  ████████████
     //!Indicará el ajuste que utilizará el disco para crear las
     //!particiones dentro del disco Podrá tener los siguientes valores:
-    if (disco->fit == "bf" || disco->unit.empty() ) //Indicará el mejor ajuste (Best Fit)
+    if (disco->fit == "b" ||disco->fit == "bf" || disco->unit.empty() ) //Indicará el mejor ajuste (Best Fit)
     {
         strcpy(mbr.disk_fit, "bf");
         cout<<"Indicará el mejor ajuste (Best Fit)"<<endl;
-    }else if(disco->fit == "ff")
+    }else if(disco->fit == "ff"||disco->fit == "f")
     {
         cout<<"Utilizará el primer ajuste (First Fit)"<<endl;
         strcpy(mbr.disk_fit, "ff");
-    }else if(disco->fit == "wf")
+    }else if(disco->fit == "wf"||disco->fit == "w")
     {
         strcpy(mbr.disk_fit, "wf");
         cout<<"Utilizará el peor ajuste (Worst Fit)"<<endl;

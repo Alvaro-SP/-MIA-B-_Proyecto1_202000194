@@ -12,6 +12,7 @@ class rep
 public:
     rep();
     MBR* obtainMBR(char path[], string id);
+    void disk0(string nombres, string idi, string paths,string path_reports);
     void disk(string nombres, string idi, string paths,string path_reports);
     bool isvalidDirectory(const char *path);
         vector<string> splitSimulated(string str, char pattern);

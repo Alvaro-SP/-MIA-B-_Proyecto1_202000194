@@ -20,6 +20,36 @@ MBR* mount::obtainMBR(char path[]){
     fclose(myFile);
     return mbr;
 }
+EBR* mount::primerEBR(MBR *disco,string paths){
+    int i;
+    char* path=&paths[0];
+    PARTITION *extended = NULL;
+    for(i=0;i<4;i++){
+        //* Si la particion es ACTIVA y es una EXTENDIDA.
+        if(disco->mbr_p[i].part_status == '1' && disco->mbr_p[i].part_type == 'e'){
+            extended = &disco->mbr_p[i];
+            break;
+        }
+    }
+        if(extended!=NULL){
+
+            FILE *myFile = fopen(path,"rb+");
+            if(myFile==NULL){
+
+                cout<<"\n FFFFFFFFFFF   Error al abrir el archivo  FFFFFFFFFFF \n";
+                return NULL;
+            }
+            EBR *ebr = (EBR*)malloc(sizeof(EBR));
+
+            fseek(myFile, extended->part_start, SEEK_SET);
+            fread(ebr, sizeof(EBR), 1, myFile);
+            fclose(myFile);
+            return ebr;
+            
+        }
+
+    return NULL;
+}
 
 char* mount::obtainKey( int numero, char letra){
     string key("94");
@@ -47,7 +77,8 @@ void mount::montar(mount *disk){
         //* Si no esta montada la particion se crea un montaje con sus atributos
         partsMounted[contador] = new DISKMOUNT();
         strcpy(partsMounted[contador]->path,disk->path.c_str());
-        partsMounted[contador]->letter = tolower(65+contador); //manipulacion de mis letras usando los ASCII
+        // partsMounted[contador]->letter = tolower(65+contador); //manipulacion de mis letras usando los ASCII
+        partsMounted[contador]->num = contador;
     }
     
 
@@ -70,6 +101,7 @@ void mount::montar(mount *disk){
         return ;
     }
     //! se busca particion primaria 
+    PARTITION part;
     int i;
     int init;
     for(i=0;i<4;i++){
@@ -78,13 +110,40 @@ void mount::montar(mount *disk){
             init = disco->mbr_p[i].part_start;
             break;
         }
+        part = disco->mbr_p[i];
+        if(part.part_type=='e' || part.part_type=='E'){
+            EBR *ebr = primerEBR(disco,disk->path.c_str());
+            while(ebr!=NULL){
+                if(strcmp(ebr->part_name,disk->name.c_str())==0){
+                    existPart = false;
+                    init = ebr->part_start;
+                    break;
+                }
+                if(ebr->part_next!=-1){
+                    FILE *myFile = fopen(disk->path.c_str(),"rb+");
+                    if(myFile==NULL){
+                        cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                        ebr= NULL;
+                    }
+                    EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                    fseek(myFile, ebr->part_next, SEEK_SET);
+                    fread(ebrtemp, sizeof(EBR), 1, myFile);
+                    fclose(myFile);
+                    // cout<<"comparte"<<endl;
+                    ebr =ebrtemp;
+                }else{
+                    ebr = NULL;
+                }
+            }
+        }
     }
     string llave="";
     //! si hay una particion entonces se va a agregar una particion montada ...
     if(!existPart){
          mdisk->parts[contador2] = new MountedPart();
          
-         char *key=(obtainKey(contador2, mdisk->letter));
+         char *key=(obtainKey(mdisk->num,tolower(65+contador2)));
          llave=key;
          strcpy(mdisk->parts[contador2]->id,key);
          strcpy(mdisk->parts[contador2]->name, disk->name.c_str());
@@ -112,7 +171,7 @@ void mount::montar(mount *disk){
 	// {
 	// 	cout<<"\nno se pudo crear hay algun dato malo.\n"<<endl;
 	// };
-    cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"Bravho!!"<<endl;
+    cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"\nBravho!!"<<endl;
     return ;
 }
 
@@ -136,13 +195,14 @@ void mount::desmontar(string idi){
         return;
     }
     // 94   +   Numero  +   Letra
-    char letra = str.at(3);
-    cout<<" La letra: "<<letra<<endl;
+    char num = str.at(2);
+    cout<<" El numero de ID : "<<num<<endl;
+    string s(1, num);
     int contDisks = 0;
     bool existeDisco= false;
     while(partsMounted[contDisks]!=NULL){
-        cout<<partsMounted[contDisks]->letter <<" con "<< letra<<endl;
-        if(partsMounted[contDisks]->letter == letra){
+        cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
+        if(partsMounted[contDisks]->num == stoi(s)){
             existeDisco = true;
             break;
         }

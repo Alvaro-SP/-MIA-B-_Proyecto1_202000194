@@ -95,7 +95,7 @@ void Fdisk::adminPartition(Fdisk *disco)
                 {
                     if (disco->name.empty()!=true) //?validando el name
                     {
-                        cout<<"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■.CREANDO UNA PARTICION.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"<<endl;
+                        cout<<"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■.CREANDO UNA PARTICION. \""<< disco->name <<"\" de tipo \""<<disco->type<<"\"  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"<<endl;
                         CreatePartition(disco); //se crea
                     }else{
 
@@ -157,7 +157,7 @@ int Fdisk::searchname(FILE *archivo, int start, string name)
 
     if (ebr.part_status != '0')//Indica si la partición está activa o no
     {
-        if (ebr.part_next != -1)
+        if (ebr.part_next != -1 )//|| ebr.part_next!=0
         {
             if (ebr.part_name == name)
             {
@@ -166,7 +166,7 @@ int Fdisk::searchname(FILE *archivo, int start, string name)
             }
             else
             {
-                return searchname(archivo, ebr.part_next, name);
+                return searchname(archivo, ebr.part_next, name);//problem
             }
         }
         else
@@ -200,7 +200,7 @@ int Fdisk::searchname(FILE *archivo, int start, string name)
     return -1;
 }
 
-//* ██████████████████████████████████████  BUSQUEDA DE UNA PARTICION LOGICA.  █████████████████████████████████████
+//* ██████████████████████████████████████  VALIDACION CREACION DE UNA PARTICION LOGICA.  █████████████████████████████████████
 void Fdisk::searchLogica(int tam_part, Fdisk *disco, FILE *archivo, int start, int total )
 {
     EBR ebr;
@@ -267,7 +267,7 @@ void Fdisk::searchLogica(int tam_part, Fdisk *disco, FILE *archivo, int start, i
                 ebr.part_next = temporalint;
             }
             
-            strcpy(ebr.part_name, disco->name.c_str());//PASO EL NOMBRE
+            strcpy(ebr.part_name, disco->name.c_str());// PORST A ESO PASO EL NOMBRE
             //* despues paso el tamano de la particion del ebr
             ebr.part_size = tam_part;  
              
@@ -281,6 +281,7 @@ void Fdisk::searchLogica(int tam_part, Fdisk *disco, FILE *archivo, int start, i
             
             fseek(archivo, ebr.part_next, SEEK_SET);
             fwrite(&ebrnext, sizeof(EBR), 1, archivo);
+            cout<<"La particion \""<<disco->name<<"\" de tipo \""<<disco->type<<"\" Se ha creado exitosamente. Ruta: \"" << disco->path << "\""<<endl;
         }
         //* si no es el ultimo 
         else
@@ -315,7 +316,7 @@ void Fdisk::searchLogica(int tam_part, Fdisk *disco, FILE *archivo, int start, i
                 fseek(archivo, ebr.part_next, SEEK_SET);
                 fwrite(&ebr_next, sizeof(EBR), 1, archivo);
 
-                cout<<"La particion "<<disco->name<<" Se ha creado exitosamente."<<endl;
+                cout<<"La particion "<<disco->name<<"\" de tipo \""<<disco->type<<"\"  Se ha creado exitosamente."<<endl;
 
             }else if (tam_part == ebr.part_size)
             {
@@ -325,7 +326,7 @@ void Fdisk::searchLogica(int tam_part, Fdisk *disco, FILE *archivo, int start, i
                 
                 fseek(archivo, start, SEEK_SET);
                 fwrite(&ebr, sizeof(EBR), 1, archivo);
-                cout<<"La particion "<<disco->name<<" Se ha creado exitosamente."<<endl;
+                cout<<"La particion "<<disco->name<<"\" de tipo \""<<disco->type<<"\"  Se ha creado exitosamente."<<endl;
             }
             else
             {
@@ -412,9 +413,10 @@ bool Fdisk::StateInactiveCreate(int i, int espacio_disp, MBR mbr, int p_gen_tam,
                 cout<<"Utilizará el peor ajuste (Worst Fit)"<<endl;
             }else
             {
+                mbr.mbr_p[i].part_fit = 'w';
                 //*Si se utiliza otro valor que no sea alguno de los anteriores mostrará un mensaje de error.
                 // strcpy(mbr.disk_fit, "bf");
-                cout << "  EL AJUSTE FIT ES INCORRECTO REVISELO...  " << endl;
+                cout << "  EL AJUSTE FIT ES INCORRECTO REVISELO...  (se asigno wf por si acaso)" << endl;
             }
 
             //! ████████████  GUARDAR DATOS DEL NUEVO MBR  ████████████
@@ -448,7 +450,7 @@ bool Fdisk::StateInactiveCreate(int i, int espacio_disp, MBR mbr, int p_gen_tam,
             // fseek(archivo, start, SEEK_SET);
             // fwrite(&ebr, sizeof(EBR), 1, archivo);
             
-            cout<<"La particion "<<disco->name<<" Se ha creado exitosamente. Ruta: \"" << disco->path << "\""<<endl;
+            cout<<"La particion "<<disco->name<<"\" de tipo \""<<disco->type<<"\"  Se ha creado exitosamente. Ruta: \"" << disco->path << "\""<<endl;
         }
         else
         {
@@ -558,12 +560,15 @@ void Fdisk::CreatePartition(Fdisk *disco)
     fseek(archivo, 0, SEEK_SET);
     MBR mbr;
     fread(&mbr, sizeof(MBR), 1, archivo);
+    cout<<"tamano del ebr: "<<sizeof(mbr)<<endl;
     //! ████████████  VERIFICO QUE EL NOMBRE NO SEA REPETIDO  ████████████
     //* El nombre no debe repetirse dentro de las particiones de cada disco.
     bool p_existe = false;
     //? Deberá tener en cuenta las restricciones de teoría de particiones:
     for (int i = 0; i < 4; i++)//!solo son 4 particiones, entonces las recorro.
     {
+        cout<<mbr.mbr_p[i].part_name<<endl;
+        cout<<i<<endl;
         // La suma de primarias y extendidas debe ser como máximo 4.
         if (mbr.mbr_p[i].part_name == disco->name)//!si el nombre de la particion mbr  es igual al nombre
         {
@@ -624,6 +629,7 @@ void Fdisk::CreatePartition(Fdisk *disco)
         {
             // Las particiones lógicas sólo pueden estar dentro de
             // la extendida sin sobrepasar su tamaño.
+            // cout<<i<<endl;
             if (mbr.mbr_p[i].part_type == 'e')
             {
                 existext = false;
@@ -639,7 +645,7 @@ void Fdisk::CreatePartition(Fdisk *disco)
         if (!p_existe)//* si existe la particion
         {
             // cout<<""<<nopart;
-
+            cout<<" \ncreando una particion Logica en el EBR ...";
             // Busco su EBR
             //* y creo la unidad logica si asi fuera el caso de la creacion de particioners.........
             searchLogica(p_gen_tam, disco, archivo, mbr.mbr_p[nopart].part_start, mbr.mbr_p[nopart].part_start + mbr.mbr_p[nopart].part_size);
@@ -651,7 +657,7 @@ void Fdisk::CreatePartition(Fdisk *disco)
 
         fclose(archivo);
     }
-    else if ( disco->type == "p" || disco->type == "e")
+    else if ( disco->type == "p" || disco->type == "e" || disco->type=="")
     {
         //todo Procedo a crear una particion primaria o extendida...
         crearPrimariaExtendida(mbr,disco, p_gen_tam, p_existe, archivo);
@@ -734,6 +740,40 @@ int Fdisk::searchLogicPartitionsDelete(Fdisk *disco, FILE *archivo, int inicio)
 }
 
 //* █████████████████████████████████      ELIMINACION DE PARTICION DE FORMA RAPIDA    █████████████████████████████
+
+EBR* Fdisk::primerEBR(MBR *disco,string paths){
+    int i;
+    char* path=&paths[0];
+    PARTITION *extended = NULL;
+    for(i=0;i<4;i++){
+        //* Si la particion es ACTIVA y es una EXTENDIDA.
+        if(disco->mbr_p[i].part_status == '1' && disco->mbr_p[i].part_type == 'e'){
+            extended = &disco->mbr_p[i];
+            break;
+        }
+    }
+        if(extended!=NULL){
+
+            FILE *myFile = fopen(path,"rb+");
+            if(myFile==NULL){
+
+                cout<<"\n FFFFFFFFFFF   Error al abrir el archivo  FFFFFFFFFFF \n";
+                return NULL;
+            }
+            EBR *ebr = (EBR*)malloc(sizeof(EBR));
+
+            fseek(myFile, extended->part_start, SEEK_SET);
+            fread(ebr, sizeof(EBR), 1, myFile);
+            fclose(myFile);
+            return ebr;
+            
+        }
+
+    return NULL;
+}
+
+
+
 void Fdisk::deleteFast(FILE *archivo, int pos){
     EBR ebr;
     fseek(archivo, pos, SEEK_SET);
@@ -778,7 +818,7 @@ void Fdisk::DeletePartition(Fdisk *disco)
 {
     FILE *archivo;
     archivo = fopen(disco->path.c_str(), "rb+");
-    MBR mbr;
+    MBR *mbr;
     fseek(archivo, 0, SEEK_SET);
     fread(&mbr, sizeof(MBR), 1, archivo);
 
@@ -790,24 +830,74 @@ void Fdisk::DeletePartition(Fdisk *disco)
   
     if (disco->deleted == "fast")
     {   
+        PARTITION part;
         bool eliminada=false; // no se ha eliminado
         //* Fast: Esta opción marca como vacío el espacio en la
         // *tabla de particiones.
         for (int i = 0; i < 4; i++)//?recorro mi tabla de particiones.
         {
 
-            if (mbr.mbr_p[i].part_name == disco->name) // si encuentro la particion la borro
+            // if(mbr.mbr_p[i].part_type){
+
+
+            // }
+            part = mbr->mbr_p[i];
+            //* RECORRO MIS EBR'S EN BUSCA DE UNA PARTICION QUE MATCHE CON LA PARTICION QUE SE QUIERE ELIMINAR.
+            if(part.part_type=='e' || part.part_type=='E'){
+                
+                EBR *ebr = primerEBR(mbr,disco->path.c_str());
+                while(ebr!=NULL){
+                    //  if ebr->part_name == disco->name)
+                    if(strcmp(ebr->part_name,disco->name.c_str())==0){
+                        
+                        EBR *newebr;
+                        newebr->part_fit = '-';
+                        newebr->part_next = -1;
+                        newebr->part_size = -1;
+                        newebr->part_start = -1;
+                        newebr->part_status = '0';
+                        newebr->part_name[0] = '\0';
+
+                        ebr=newebr;
+                        //!█████████████████ rellena el espaciocon el carácter \0 █████████████████
+
+                        //* como es fast alli se queda xdxd                        
+                        eliminada=true;                            
+                        break;
+                    }
+                    if(ebr->part_next!=-1){
+                        FILE *myFile = fopen(disco->path.c_str(),"rb+");
+                        if(myFile==NULL){
+                            cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                            ebr= NULL;
+                        }
+                        EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                        fseek(myFile, ebr->part_next, SEEK_SET);
+                        fread(ebrtemp, sizeof(EBR), 1, myFile);
+                        fclose(myFile);
+                        // cout<<"comparte"<<endl;
+                        ebr =ebrtemp;
+                    }else{
+                        ebr = NULL;
+                    }
+                }
+            }
+
+
+
+            if (mbr->mbr_p[i].part_name == disco->name) // si encuentro la particion la borro
             {   
                 // seteando y borrando los datos de mi particion.
                 for (int j = 0; j < 16; j++)
                 {
-                    mbr.mbr_p[i].part_name[j] = '\0';
+                    mbr->mbr_p[i].part_name[j] = '\0';
                 }
-                mbr.mbr_p[i].part_status = '0';
-                mbr.mbr_p[i].part_type = '-';
-                mbr.mbr_p[i].part_fit = '-';
-                mbr.mbr_p[i].part_start= -1;
-                mbr.mbr_p[i].part_size= -1;
+                mbr->mbr_p[i].part_status = '0';
+                mbr->mbr_p[i].part_type = '-';
+                mbr->mbr_p[i].part_fit = '-';
+                mbr->mbr_p[i].part_start= -1;
+                mbr->mbr_p[i].part_size= -1;
                 
                 fseek(archivo, 0, SEEK_SET);
                 fwrite(&mbr, sizeof(MBR), 1, archivo);
@@ -817,9 +907,9 @@ void Fdisk::DeletePartition(Fdisk *disco)
             //!Si se  //! elimina la partición extendida, deben eliminarse las
             //! particiones lógicas que tenga adentro.
                 //* si la particion eliminada es extendida, entonces procedo a eliminar  las particiones lógicas que tenga adentro.
-                if (mbr.mbr_p[i].part_type == 'e')
+                if (mbr->mbr_p[i].part_type == 'e')
                 {   
-                    int inicio=mbr.mbr_p[i].part_start; // el innicio de la particion actual
+                    int inicio=mbr->mbr_p[i].part_start; // el innicio de la particion actual
                     int pos=searchLogicPartitionsDelete(disco, archivo, inicio);
                     if (pos == -1)
                     {
@@ -849,56 +939,116 @@ void Fdisk::DeletePartition(Fdisk *disco)
         //* con el carácter \0. Si se utiliza otro valor diferente,
         //* mostrará un mensaje de error.
         bool eliminada=false; // no se ha eliminado
-
+        bool isdeleted=false;
         char buff = '\0';
+        PARTITION part;
+       
+        
 
-        for (int i = 0; i < 4; i++)
-        {
-            if (mbr.mbr_p[i].part_name == disco->name)
+
+
+
+        if(!isdeleted){
+            for (int i = 0; i < 4; i++)
             {
-               fseek(archivo, mbr.mbr_p[i].part_start, SEEK_SET);
+                // if(mbr.mbr_p[i].part_type){
 
-                for (int j = 0; j < mbr.mbr_p[i].part_size; j++)
-                {
-                    fwrite(&buff, sizeof(buff), 1, archivo);
-                    fseek(archivo, mbr.mbr_p[i].part_start + j, SEEK_SET);
+
+                // }
+                part = mbr->mbr_p[i];
+                //* RECORRO MIS EBR'S EN BUSCA DE UNA PARTICION QUE MATCHE CON LA PARTICION QUE SE QUIERE ELIMINAR.
+                if(part.part_type=='e' || part.part_type=='E'){
+                    
+                    EBR *ebr = primerEBR(mbr,disco->path.c_str());
+                    while(ebr!=NULL){
+                        //  if ebr->part_name == disco->name)
+                        if(strcmp(ebr->part_name,disco->name.c_str())==0){
+                            
+                            EBR *newebr;
+                            newebr->part_fit = '-';
+                            newebr->part_next = -1;
+                            newebr->part_size = -1;
+                            newebr->part_start = -1;
+                            newebr->part_status = '0';
+                            newebr->part_name[0] = '\0';
+
+                            ebr=newebr;
+                            //!█████████████████ rellena el espaciocon el carácter \0 █████████████████
+
+
+
+                            eliminada=true;                            
+                            break;
+                        }
+                        if(ebr->part_next!=-1){
+                            FILE *myFile = fopen(disco->path.c_str(),"rb+");
+                            if(myFile==NULL){
+                                cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                                ebr= NULL;
+                            }
+                            EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                            fseek(myFile, ebr->part_next, SEEK_SET);
+                            fread(ebrtemp, sizeof(EBR), 1, myFile);
+                            fclose(myFile);
+                            // cout<<"comparte"<<endl;
+                            ebr =ebrtemp;
+                        }else{
+                            ebr = NULL;
+                        }
+                    }
                 }
 
-                mbr.mbr_p[i].part_status = '0';
-                mbr.mbr_p[i].part_type = '-';
-                mbr.mbr_p[i].part_fit = '-';
-                mbr.mbr_p[i].part_start = -1;
-                mbr.mbr_p[i].part_size = -1;
-                for (int j = 0; j < 16; j++)
-                {
-                    mbr.mbr_p[i].part_name[j] = '\0';
-                }
 
-                fseek(archivo, 0, SEEK_SET);
-                fwrite(&mbr, sizeof(MBR), 1, archivo);
-                fclose(archivo);
 
-                if (mbr.mbr_p[i].part_type == 'e')
+
+                if (mbr->mbr_p[i].part_name == disco->name)
                 {
-                    int inicio=mbr.mbr_p[i].part_start; 
-                    int pos=searchLogicPartitionsDelete(disco, archivo, inicio);
-                    if (pos == -1)
+                    fseek(archivo, mbr->mbr_p[i].part_start, SEEK_SET);
+
+                    for (int j = 0; j < mbr->mbr_p[i].part_size; j++)
                     {
-                        
-                    }else{
-                        deleteFull(archivo, pos);
-                        fclose(archivo);
+                        fwrite(&buff, sizeof(buff), 1, archivo);
+                        fseek(archivo, mbr->mbr_p[i].part_start + j, SEEK_SET);
                     }
 
-                    
-                }
-                eliminada=true;
-                break;
-            }
+                    mbr->mbr_p[i].part_status = '0';
+                    mbr->mbr_p[i].part_type = '-';
+                    mbr->mbr_p[i].part_fit = '-';
+                    mbr->mbr_p[i].part_start = -1;
+                    mbr->mbr_p[i].part_size = -1;
+                    for (int j = 0; j < 16; j++)
+                    {
+                        mbr->mbr_p[i].part_name[j] = '\0';
+                    }
 
-            
+                    fseek(archivo, 0, SEEK_SET);
+                    fwrite(mbr, sizeof(MBR), 1, archivo);
+                    fclose(archivo);
+
+                    if (mbr->mbr_p[i].part_type == 'e')
+                    {
+                        int inicio=mbr->mbr_p[i].part_start; 
+                        int pos=searchLogicPartitionsDelete(disco, archivo, inicio);
+                        if (pos == -1)
+                        {
+                            
+                        }else{
+                            deleteFull(archivo, pos);
+                            fclose(archivo);
+                        }
+
+                        
+                    }
+                    eliminada=true;
+                    break;
+                }
+
+                
+            }
+        
         }
-    
+        
         if(eliminada==false){
             //! Si la partición no existe deberá mostrar error. 
             cout<<"FFFFFFFFF   No se ha encontrado la particion a eliminar, verifique el nombre y ruta  FFFFFFFFF"<<endl;

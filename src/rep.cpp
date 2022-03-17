@@ -60,7 +60,7 @@ vector<string> rep::splitSimulated(string myargument, char quitar) // solo simul
 MBR* rep::obtainMBR(char pathF[], string idi){
 
     // char id[idie.length()];
- 
+    rutaglobal="";
     // size_t i;
     // for ( i = 0; i < sizeof(idie); i++) {
     //     id[i] = idie[i];
@@ -77,15 +77,16 @@ MBR* rep::obtainMBR(char pathF[], string idi){
         return NULL;
     }
     // 94   +   Numero  +   Letra
-    char letra = str.at(3);
-    cout<<" La letra: "<<letra<<endl;
-    
+    char num = str.at(2);
+    cout<<"                 El numero de ID: "<<num<<endl;
+    string s(1, num);
     int contDisks = 0;
     bool existeDisco= false;
     while(partsMounted[contDisks]!=NULL){
-        cout<<partsMounted[contDisks]->letter <<" con "<< letra<<endl;
-        if(partsMounted[contDisks]->letter == letra){
+        cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
+        if(partsMounted[contDisks]->num == stoi(s)){
             existeDisco = true;
+            
             break;
         }
         contDisks++;
@@ -106,6 +107,7 @@ MBR* rep::obtainMBR(char pathF[], string idi){
         if(strcmp((partsMounted[contDisks])->parts[contadorPart]->id,id)==0){
             existePart = false;// si existe
             paths=(partsMounted[contDisks])->path;
+            cout<<"        El id del  disco a generar el reporte: "<< num<<" se encuentra en: "<< paths<<endl;
             break;
         }
         contadorPart++;
@@ -117,7 +119,7 @@ MBR* rep::obtainMBR(char pathF[], string idi){
     if (existePart)
     {
 
-        cout << "La particion \"" << id <<"\" no ha sido encontrada para el reporte MBR" << endl;
+        cout << "El id de La particion \"" << id <<"\" es incorrecto pero la letra si es correcta... para el reporte " << endl;
     }
 
 
@@ -149,6 +151,7 @@ MBR* rep::obtainMBR(char pathF[], string idi){
 	fclose(myarchivo);
 
     rutaglobal=paths;
+    cout<<"----------------> Ruta global de mi MBR: "<<rutaglobal<<endl;
     char* path=&paths[0];
     FILE *myFile;
     myFile = fopen(path,"rb+");
@@ -250,7 +253,7 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
 
     }
 
-
+    //! ████████████ FIN VERIFICACION DE LA RUTA  ████████████
 
 
 
@@ -261,6 +264,7 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
     try
     {
        disco = obtainMBR(path,id);
+       cout<<"                      DISCO OBTENIDO"<<" de la ruta: "<<path<<" con id: "<<id<<endl;
     }
     catch(...)
     {
@@ -507,7 +511,7 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
                 }else{
                     ebr = NULL;
                 }
-                i++;
+                // i++;
             }
             // fputs("</table>\n",myFile);
             // fputs(">];\n", myFile);
@@ -518,12 +522,12 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
     fputs(">];\n\n", myFile);
     fputs("\n\ntbl3 [\nshape=plaintext\n label=<\n", myFile);
     fputs("<table border='0' cellborder='1' cellspacing='0'>\n",myFile);
-            fputs("<tr><td colspan=\"3\">",myFile);
-            fputs("REPORTE DE EBRS",myFile);
-            fputs("</td></tr>\n",myFile);
-            fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
-            // fputs(colors[i],myFile);
-            // fputs("\">",myFile);
+        fputs("<tr><td colspan=\"3\">",myFile);
+        fputs("REPORTE DE EBRS",myFile);
+        fputs("</td></tr>\n",myFile);
+        fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
+        // fputs(colors[i],myFile);
+        // fputs("\">",myFile);
     for(i=0;i<4;i++){
         // if(part.part_type=='p'||part.part_type=='P'||part.part_type=='E'||part.part_type=='e'){
         //     for(int j = 0; j < 10; i++)
@@ -656,7 +660,697 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
 
 //* ██████████████████████████████████████  DISK  █████████████████████████████████████
 
-//* ██████████████████████████████████████  MBR  █████████████████████████████████████
+void rep::disk0(string nombres, string idi, string paths,string path_reports)
+{
+    /*Este reporte mostrará la estructura de las particiones, el mbr del disco y el
+    porcentaje que cada partición o espacio libre tiene dentro del disco (La sumatoria de
+    los porcentajes debe de ser 100%).*/
+
+    char* path=&paths[0];
+    char* nombre=&nombres[0];
+    // 
+    char* id=&idi[0];
+    char* pathr=&path_reports[0];
+
+    //! ████████████  VERIFICACION DE LA RUTA  ████████████
+    // Primero validamos de que exista la carpeta donde creare el disco.
+    vector<string> ccarpetold = (splitSimulated(paths, '/'));
+    vector<string> ccarpet ;
+
+    string espacio = " ";
+    bool com = false;    
+    for (size_t i = 0; i < ccarpetold.size(); i++){//recorro mi vector de la ruta para ver si no hay espacios
+        if (ccarpetold[i][0] != (char)00)//!si no es un (char)00
+        {
+            if (ccarpetold[i][0] != '#')//!si no es un comentario
+            {
+                if (com == false)//! y si com no ha sido modificado.
+                {
+                    ccarpet.push_back(ccarpetold[i]);//* meto la posicion de mi vector en el nuevo vector.
+                }
+            }
+            else
+            {
+                com = true;
+            }
+        }
+    }
+    
+
+    string tempath = "";
+    string tempath2 = "";
+    // cout<<ccarpet.size()<<endl;
+    MBR mbr;
+    if(ccarpet.size()>0){
+        for (size_t  i = 0; i < ccarpet.size()-1; i++)
+        {
+            tempath += "/" + ccarpet[i];
+            // cout<<ccarpet[i]<<"  -----------------------"<<endl;
+            // Si las carpetas de la ruta no existen deberán crearse.
+            // cout<<"tempath; "<<tempath<<endl;
+            if (!isvalidDirectory(tempath.c_str()))
+            {
+                string comando = "mkdir " + tempath2 + "/\"" + ccarpet[i] + "\"";
+                // cout<<"comando; "<<comando<<endl;
+                system(comando.c_str());
+            }
+            tempath2 += "/" + ccarpet[i];
+        }
+
+    }
+
+    //! ████████████  FIN DE LA VERIFICACION DE LA RUTA  ████████████
+    
+    MBR* disco;
+    // ! necesito buscar el disco donde se ubica la particion con el idi dado
+    try
+    {
+       disco = obtainMBR(path,id);
+    }
+    catch(...)
+    {
+        cout<<"FFFFFFFFFF   No se pudo generar el reporte, el disco de esa ruta es vacio.    FFFFFFFFFFFF\n";
+        return;
+    }
+  
+
+    // Fdisk herramienta1;
+    if(disco==NULL){
+        cout<<"FFFFFFFFFF   No se pudo generar el reporte, el disco de esa ruta es vacio.    FFFFFFFFFFFF\n";
+        return;
+    }
+
+    //! ████████████  START OF CREATE MY DISK OF MY REPORT OF DISKS... ████████████
+    FILE *myFile;
+    myFile =  fopen("REPORTE_DISKS_202000194.dot","w+");
+    if (myFile==NULL)
+    {
+        cout<<"\nError al crear el archivo\n";
+        return;
+    }
+   
+    if(myFile!=NULL){
+        fseek(myFile, 0, SEEK_SET);
+        fputs("digraph migraph{\n", myFile);
+        fputs("     bgcolor=\"yellow:cyan\" ", myFile);
+        fputs("    gradientangle=0", myFile);
+        fputs("rankdir=TB;", myFile);
+        fputs("    label=\" Reporte de Disco:  ", myFile);
+        fputs(nombre, myFile);
+        fputs(" en: ", myFile); 
+        
+        
+
+        fputs("fontcolor=\"black\"", myFile);
+        fputs(" fontname=\"Helvetica,Arial,sans-serif\"", myFile);
+        fputs("node [shape=record];", myFile);
+        fputs("nodo [label=\" ", myFile);
+        fputs("MBR \\n ", myFile);
+        fputs("", myFile);
+        fputs("", myFile);
+        
+
+
+        MBR mbr;
+    
+    
+        // i read the MBR that i can to show to user.
+        fseek(myFile, 0, SEEK_SET);
+        fread(&mbr, sizeof(MBR), 1, myFile);
+
+        int porcentaje = 0;
+        int porcentajeTotal = 0;
+        bool continua = false;
+
+
+        //* Procedo a realizar la lectura del MBR...
+        for (int i = 0; i < 4; i++)
+        {
+
+            porcentaje = 0;
+            if (mbr.mbr_p[i].part_status == '1')
+            {
+                continua = false;
+                
+                if (mbr.mbr_p[i].part_type == 'P')
+                {
+                    porcentaje = mbr.mbr_p[i].part_size / (mbr.mbr_tamano / 100);
+                    porcentajeTotal += porcentaje;
+                    
+                    
+
+                    fputs("| Primaria \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+
+                    fputs("%", myFile);
+                }
+                
+                else if (mbr.mbr_p[i].part_type == 'e' || mbr.mbr_p[i].part_type == 'E')
+                {
+                    porcentaje = mbr.mbr_p[i].part_size / (mbr.mbr_tamano / 100);
+                    porcentajeTotal += porcentaje;
+
+
+
+                    fputs("| { Extendida \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+                    fputs("% | {", myFile);
+                    
+                    char* pathg=&rutaglobal[0];
+                    EBR *ebr = primerEBR(disco,pathg);
+
+                    while(ebr!=NULL){
+                        if (ebr->part_status == '0')
+                        {
+                            if(ebr->part_next!=-1){
+                                int porcentaje = ebr->part_size / (mbr.mbr_tamano  / 100);
+                                fputs("Libre \\n ", myFile);
+                                fprintf(myFile, "%d", porcentaje);
+                                fputs("%", myFile);
+
+                                FILE *myFile = fopen(pathg,"rb+");
+                                if(myFile==NULL){
+                                    cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                                    ebr= NULL;
+                                }
+                                EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                                fseek(myFile, ebr->part_next, SEEK_SET);
+                                fread(ebrtemp, sizeof(EBR), 1, myFile);
+                                fclose(myFile);
+                                // cout<<"comparte"<<endl;
+                                ebr =ebrtemp;
+
+                            }else{
+                                fputs("Libre", myFile);
+                                ebr = NULL;
+                            }
+                            // i++;
+
+                        }else
+                        {
+                            if (ebr->part_next != -1)
+                            {
+                                int porcentaje=ebr->part_size / (mbr.mbr_tamano / 100);
+                                fputs("EBR | Logica \\n", myFile);
+                                fprintf(myFile, "%d", porcentaje);
+                                fputs("% |", myFile);
+                            }
+                            else
+                            {
+                                
+                            }
+                        }
+                        
+                    }
+                    fputs(" } } ", myFile);
+                    
+                    fputs("", myFile);
+                    // fputs("</table>\n",myFile);
+                    // fputs(">];\n", myFile);
+                }
+    
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    
+                    int tota = 1;
+                    for (int j = 1; j < 4; j++)
+                    {
+                        if (mbr.mbr_p[j].part_status == '1')
+                        {
+                            int espacio_disp = mbr.mbr_p[j].part_start - sizeof(mbr);
+
+                            porcentaje = espacio_disp / (mbr.mbr_tamano / 100);
+                            porcentajeTotal += porcentaje;
+                            continua = true;
+                            break;
+                        }
+                        else
+                        {
+                            tota += 1;
+                        }
+                    }
+
+                    if (tota == 4)
+                    {
+                        break;
+                    }
+                    fputs("| Libre \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+                    fputs("%", myFile);
+                    
+                }
+                else
+                {
+                    if (continua == false)
+                    {
+
+                        if (i < 3)
+                        {
+                            int inicio = mbr.mbr_p[i - 1].part_start + mbr.mbr_p[i - 1].part_size;
+                            int espacio_disp = mbr.mbr_tamano - inicio;
+
+                            porcentaje = espacio_disp / (mbr.mbr_tamano / 100);
+
+                            //Voy verificando cuanto espacio tengo disponible
+                            for (int j = i; j < 4; j++)
+                            {
+                                if (mbr.mbr_p[j].part_status == '1')
+                                {
+                                    espacio_disp = mbr.mbr_p[j].part_start - inicio;
+                                    porcentaje = espacio_disp / (mbr.mbr_tamano / 100);
+                                    continua = true;
+                                    break;
+                                }
+                            }
+
+                            porcentajeTotal += porcentaje;
+                            fputs("| Libre \\n ", myFile);
+                            fprintf(myFile, "%d", porcentaje);
+                            fputs("%", myFile);
+                            
+                        }
+                    }
+                }
+            }
+   
+        }
+            
+        
+        if (porcentaje < 100)
+        {
+            if (100 - porcentajeTotal > 0)
+            {
+                fputs("| Libre \\n", myFile);
+                int porcentajesobrante= 100 - porcentajeTotal;
+                fprintf(myFile, "%d", porcentajesobrante);
+                fputs("%", myFile);
+            }
+        }
+        fputs("\" ];\n\n",myFile);
+        fputs("} \n", myFile);
+        
+
+
+        fclose (myFile);
+        string pathString(path);
+        string command = "dot -Tpng REPORTE_DISKS_202000194.dot -o \""+pathString+"\"";
+        system(command.c_str());
+        cout<<"\n Generando la imagen..."<<endl;
+        sleep(2);
+        cout<<"\n Se ha generado el Reporte de MBR sin problemas, vaya a: \n\t\t"<<pathString<<"  para verlo"<<endl;
+    // i++;
+
+
+    }else{
+        cout<<"\n FFFFFFFFFFF Error el archivo es Nulo a saber porque...   FFFFFFFFFFF";
+    }
+
+    
+
+   
+ 
+}
+
+
+void rep::disk(string nombres, string idi, string paths,string path_reports){
+    char* path=&paths[0];
+    char* nombre=&nombres[0];
+    // 
+    char* id=&idi[0];
+    // char* pathr=&path_reports[0];
+
+
+    //! ████████████  VERIFICACION DE LA RUTA  ████████████
+    // Primero validamos de que exista la carpeta donde creare el disco.
+    vector<string> ccarpetold = (splitSimulated(paths, '/'));
+    vector<string> ccarpet ;
+
+    string espacio = " ";
+    bool com = false;    
+    for (size_t i = 0; i < ccarpetold.size(); i++){//recorro mi vector de la ruta para ver si no hay espacios
+        if (ccarpetold[i][0] != (char)00)//!si no es un (char)00
+        {
+            if (ccarpetold[i][0] != '#')//!si no es un comentario
+            {
+                if (com == false)//! y si com no ha sido modificado.
+                {
+                    ccarpet.push_back(ccarpetold[i]);//* meto la posicion de mi vector en el nuevo vector.
+                }
+            }
+            else
+            {
+                com = true;
+            }
+        }
+    }
+    
+
+    string tempath = "";
+    string tempath2 = "";
+    // cout<<ccarpet.size()<<endl;
+    // MBR mbr;
+    if(ccarpet.size()>0){
+        for (size_t  i = 0; i < ccarpet.size()-1; i++)
+        {
+            tempath += "/" + ccarpet[i];
+            // cout<<ccarpet[i]<<"  -----------------------"<<endl;
+            // Si las carpetas de la ruta no existen deberán crearse.
+            // cout<<"tempath; "<<tempath<<endl;
+            if (!isvalidDirectory(tempath.c_str()))
+            {
+                string comando = "mkdir " + tempath2 + "/\"" + ccarpet[i] + "\"";
+                // cout<<"comando; "<<comando<<endl;
+                system(comando.c_str());
+            }
+            tempath2 += "/" + ccarpet[i];
+        }
+
+    }
+
+   
+    //! ████████████ OBTENGO EL DISCO SEGUN MI ID ████████████
+
+    MBR* disco;
+    // ! necesito buscar el disco donde se ubica la particion con el idi dado
+    try
+    {
+       disco = obtainMBR(path,id);
+    }
+    catch(...)
+    {
+         cout<<"FFFFFFFFFF   No se pudo generar el reporte, el disco de esa ruta es vacio.    FFFFFFFFFFFF\n";
+        return;
+    }
+    
+    
+    cout<<"here"<<endl;
+    if(disco==NULL){
+        cout<<"FFFFFFFFFF   No se pudo generar el reporte, el disco de esa ruta es vacio.    FFFFFFFFFFFF\n";
+        return;
+    }
+    //! ████████████ ABRO EL DOT PARA SETEARLE EL REPORTE ████████████
+
+    FILE *myFile;
+    myFile =  fopen("REPORTE_DISKS_202000194.dot","w+");
+    if (myFile==NULL)
+    {
+        cout<<"Error al crear el archivo\n";
+        return;
+    }
+    if(myFile!=NULL){
+        fseek(myFile, 0, SEEK_SET);
+        fputs("digraph migraph{\n", myFile);
+        fputs("     bgcolor=\"yellow:yellow3\" ", myFile);
+        fputs("   \n gradientangle=0", myFile);
+        fputs("   \n label=\"", myFile);
+        fputs(nombre, myFile);
+        fputs(" en: ", myFile);
+        fputs(path, myFile);
+        fputs("\"", myFile);
+        fputs("  \n  fontcolor=\"black\"", myFile);
+        fputs("  \n  fontname=\"Helvetica,Arial,sans-serif\"", myFile);
+        // fputs("\nbgcolor=\"yellow:cyan\" \ngradientangle=0  fontcolor=\"black\" fontname=\"Helvetica,Arial,sans-serif\"", myFile);
+        
+         
+       
+        fputs("\n subgraph cluster1 {", myFile);
+        fputs("\n fillcolor=\"blue:cyan\"", myFile);
+        fputs("\n label=\"\"", myFile);
+        fputs("\n fontcolor=\"white\"", myFile);
+        fputs("\n style=\"filled\"", myFile);
+        fputs("\n  node[shape=record fillcolor=\"red:yellow\" style=\"filled\" gradientangle=90]", myFile);
+
+        fputs("\n nod[label=\"", myFile);
+
+        fputs("MBR \\n ", myFile);
+
+
+        int i;
+        PARTITION part;
+        char colors[4][10];
+        
+        for(int i = 0; i < 10; i++)
+            {
+                colors[0][i] = 0;
+            }
+        strcat(colors[0],"#bcf7c1");
+        for(int i = 0; i < 10; i++)
+            {
+                colors[1][i] = 0;
+            }
+        strcat(colors[1],"#f8fc92");
+        for(int i = 0; i < 10; i++)
+            {
+                colors[2][i] = 0;
+            }
+        strcat(colors[2],"#fcc292");
+        for(int i = 0; i < 10; i++)
+            {
+                colors[3][i] = 0;
+            }
+        strcat(colors[3],"#dfbcf7");
+        cout<<"\n Generando el Dot..."<<endl;
+        sleep(2);
+
+
+        // MBR mbr;
+
+
+        // // i read the MBR that i can to show to user.
+        // fseek(myFile, 0, SEEK_SET);
+        // fread(&mbr, sizeof(MBR), 1, myFile);
+
+        int porcentaje = 0;
+        int totPrimExt=0;
+        int porcentajeTotal = 0;
+        int porcentajeLibreExt = 0;
+        bool continua = false;
+        //! ████████████ INICIO DEL RECORRIDO DE MIS 4 PARTICIONES PRINCIPALES ████████████
+
+        for(i=0;i<4;i++){
+ 
+            part = disco->mbr_p[i];
+            cout<<" el "<< i << "disco"<<endl;
+            porcentaje = 0;
+            if (part.part_status == '1')
+            {
+                continua = false;
+                
+                if (part.part_type == 'P')
+                {
+                    porcentaje = part.part_size / (disco->mbr_tamano / 100);
+                    porcentajeTotal += porcentaje;
+                    
+                    
+                    totPrimExt+=porcentaje;
+                    fputs("| Primaria \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+
+                    fputs("%", myFile);
+                }
+                
+                else if (part.part_type == 'e' || part.part_type == 'E')
+                {
+                    porcentaje = disco->mbr_p[i].part_size / (disco->mbr_tamano / 100);
+                    porcentajeTotal += porcentaje;
+                    totPrimExt+=porcentaje;
+
+
+                    fputs("| { Extendida \\n ", myFile);
+                    porcentajeLibreExt=porcentaje;
+                    fprintf(myFile, "%d", porcentaje);
+                    fputs("% | {", myFile);
+                    
+                    char* pathg=&rutaglobal[0];
+                    EBR *ebr = primerEBR(disco,pathg);
+                    int porcentajeLogicas=0;
+                    while(ebr!=NULL){
+                        cout<<" recorriendo las logicas del ebr"<<ebr->part_name<<endl;
+                        if (ebr->part_status == '0')
+                        {
+                            if(ebr->part_next!=-1){
+                                int porcentaje = ebr->part_size / (disco->mbr_tamano  / 100);
+                                fputs("Libre \\n ", myFile);
+                                porcentajeLogicas+=porcentaje;
+                                fprintf(myFile, "%d", porcentaje);
+                                fputs("%", myFile);
+
+                                FILE *myFile = fopen(pathg,"rb+");
+                                if(myFile==NULL){
+                                    cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                                    ebr= NULL;
+                                }
+                                EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                                fseek(myFile, ebr->part_next, SEEK_SET);
+                                fread(ebrtemp, sizeof(EBR), 1, myFile);
+                                fclose(myFile);
+                                // cout<<"comparte"<<endl;
+                                ebr =ebrtemp;
+
+                            }else{
+                                
+                                ebr=NULL;
+                                fputs("Libre", myFile);
+                                int porcentajetotLibre=porcentajeLibreExt-porcentajeLogicas;
+                                fprintf(myFile, "%d", porcentajetotLibre);
+                                fputs("% |", myFile);
+                            }
+                            // i++;
+
+                        }else
+                        {
+                            if (ebr->part_next != -1)
+                            {
+                                int porcentaje=ebr->part_size / (disco->mbr_tamano / 100);
+                                fputs("EBR | Logica \\n", myFile);
+                                fprintf(myFile, "%d", porcentaje);
+                                fputs("% |", myFile);
+                                porcentajeLogicas+=porcentaje;
+                                
+
+                                FILE *myFile = fopen(pathg,"rb+");
+                                if(myFile==NULL){
+                                    cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                                    ebr= NULL;
+                                }
+                                EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                                fseek(myFile, ebr->part_next, SEEK_SET);
+                                fread(ebrtemp, sizeof(EBR), 1, myFile);
+                                fclose(myFile);
+                                // cout<<"comparte"<<endl;
+                                ebr =ebrtemp;
+
+
+
+
+
+                            }
+                            else
+                            {
+
+                                ebr=NULL;
+                                fputs("Libre", myFile);
+                                int porcentajetotLibre=porcentajeLibreExt-porcentajeLogicas;
+                                fprintf(myFile, "%d", porcentajetotLibre);
+                                fputs("% |", myFile);
+                            }
+                        }
+                        
+                    }
+
+                    fputs(" } } ", myFile);
+                    
+                    fputs("", myFile);
+                    // fputs("</table>\n",myFile);
+                    // fputs(">];\n", myFile);
+                }
+
+                if(i==3){
+                    // porcentajeTotal += porcentaje;
+                    fputs("| No utilizable \\n ", myFile);
+                    fprintf(myFile, "%d", 100-totPrimExt);
+                    fputs("%", myFile);
+                }
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    
+                    int tota = 1;
+                    for (int j = 1; j < 4; j++)
+                    {
+                        if (disco->mbr_p[j].part_status == '1')
+                        {
+                            int espacio_disp = disco->mbr_p[j].part_start - sizeof(disco);
+
+                            porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+                            porcentajeTotal += porcentaje;
+                            continua = true;
+                            break;
+                        }
+                        else
+                        {
+                            tota += 1;
+                        }
+                    }
+
+                    if (tota == 4)
+                    {
+                        break;
+                    }
+                    fputs("| Libre \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+                    fputs("%", myFile);
+                    
+                }
+                else
+                {
+                    if (continua == false)
+                    {
+
+                        if (i < 3)
+                        {
+                            int inicio = disco->mbr_p[i - 1].part_start + disco->mbr_p[i - 1].part_size;
+                            int espacio_disp = disco->mbr_tamano - inicio;
+
+                            porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+
+
+                            for (int j = i; j < 4; j++)
+                            {
+                                if (disco->mbr_p[j].part_status == '1')
+                                {
+                                    espacio_disp = disco->mbr_p[j].part_start - inicio;
+                                    porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+                                    continua = true;
+                                    break;
+                                }
+                            }
+
+                            porcentajeTotal += porcentaje;
+                            fputs("| Libre \\n ", myFile);
+                            fprintf(myFile, "%d", 100-totPrimExt);
+                            fputs("%", myFile);
+                            
+                        }
+                        
+                    }
+                }
+            }
+
+
+        }
+
+
+        
+        fputs("\" ];",myFile);
+        fputs("\n}\n}\n",myFile);
+        
+
+        //! ████████████ CREO EL REPORTE  ████████████
+
+        fclose (myFile);
+        string pathString(path);
+        string command = "dot -Tpng REPORTE_DISKS_202000194.dot -o \""+pathString+"\"";
+        system(command.c_str());
+        cout<<"\n Generando la imagen..."<<endl;
+        sleep(2);
+        cout<<"\n Se ha generado el Reporte de MBR sin problemas, vaya a: \n\t\t"<<pathString<<"  para verlo"<<endl;
+        // i++;
+    }else{
+        cout<<"\n FFFFFFFFFFF Error el archivo es Nulo a saber porque...   FFFFFFFFFFF";
+    }
+    
+    
+     
+}
 
 //* ██████████████████████████████████████  MBR  █████████████████████████████████████
 

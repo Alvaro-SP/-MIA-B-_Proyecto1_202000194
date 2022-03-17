@@ -465,6 +465,7 @@ void analizer(string mylines) //todo este seria el analizador
                         else if (comando[0] == "-path")
                         {	/*Este parámetro será la ruta en el que se creará el archivo
 							que representará el disco duro*/
+							cout<<" pathremove: "<<rutafound<<endl;
 							if(rutafound!=""){
 								disco->path=rutafound;
 							}else{
@@ -487,17 +488,30 @@ void analizer(string mylines) //todo este seria el analizador
 						un mensaje de confirmación para eliminar. */
 					string pathremove;
 					string confirma;
+					string concateno="";
 					sino=true;
 
 					
                     for (size_t j = 1; j < comandos.size(); j++)
                     {
-                        vector<string> comando = splitSimulated5(comandos[j], '=');
+						vector<string> comando = splitSimulated5(comandos[j], '=');
+                        // vector<string> comando = splitSimulated5(comandos[j], '=');
 						
 						if (comando[0] == "-path")
                         {	/*Este parámetro será la ruta en el que se ELIMINARA el archivo
 							que representará el disco duro*/
-                            pathremove = comando[1];
+							// cout<<" pathremove: "<<rutafound<<endl;
+							// cout<<" comandoruta: "<<comando[1]<<endl;
+							// if(rutafound!=""){
+							// 	pathremove=rutafound;
+							// }else{
+							// 	pathremove = comando[1];
+							// }
+							concateno.pop_back();
+
+							// Fuente: https://www.iteramos.com/pregunta/18755/eliminar-el-ultimo-caracter-de-la-cadena-de-c
+							// concateno+=comando[1];
+                            pathremove = concateno;
                         }
                         else
                         {
@@ -507,7 +521,7 @@ void analizer(string mylines) //todo este seria el analizador
                     }
 
 					if(sino){
-						cout << "Do you wish delete this hard Disk? [Y/n]..... ";
+						cout << "Do you wish delete this hard Disk? [Y/n]..... \n";
 						cout << "usted desea eliminar el disco realmente? [S/n]..... ";					
 						cin >> confirma;
 
@@ -721,7 +735,7 @@ void analizer(string mylines) //todo este seria el analizador
 						myreps->mbr(nombre, idi, path, rutaReport);
 					}else if(nombre=="disk"){
 						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP DISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
-						
+						myreps->disk(nombre, idi, path, rutaReport);
 
 					}else if(nombre=="journaling"){
 						cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP JOURNALING. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
@@ -830,6 +844,7 @@ int main()
 
 						try {
 						// Block of code to try
+							
 							analizer(wordmin(cadena)); //! obtengo el archivo SCRIPT en minusculas
 							// cout<<"Ejecute el comando exec si desea cargar un archivo";
 						// throw exception; // Throw an exception when a problem arise

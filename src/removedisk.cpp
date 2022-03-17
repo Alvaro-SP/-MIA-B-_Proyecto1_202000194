@@ -29,27 +29,22 @@ void removedisk::removeDisco(string pathnew)
 
 
     string Consolecmd;
-    Consolecmd = "rm \"" + pathnew + "\"";    
+    Consolecmd="rm \'";
+    Consolecmd +=  pathnew +"\'"; 
     bool isfile;
     FILE *archivo;
+    cout<<"pathnew: "<<pathnew<<endl;
     archivo = fopen(pathnew.c_str(), "r");
-    if (archivo!=NULL)
-    {
-        fclose(archivo);
-        isfile = true;
-    }
-    else
-    {
-        isfile = false;
-    }
+    
 
     
-    if (isfile){
+    try{
+        cout<<"Eliminando con cmd: "<<Consolecmd<<endl;
         system(Consolecmd.c_str());
-        cout<<"------>      Ok Sr. the Disk went deleted."<<endl;
-        cout << "------>    El disco se ha borrado con Exito" << endl;
+        cout<<"                     ------>      Ok Sr. the Disk went deleted."<<endl;
+        cout << "                    ------>    El disco se ha borrado con Exito" << endl;
     }
-    else
+    catch(...)
     {
         cout << "Verifique la ruta: \'" << pathnew << "\'... Porque no se encontro :/"<< endl;
     }
