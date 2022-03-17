@@ -95,7 +95,16 @@ DISKMOUNT* mkfs::obtainMountedDisk(string idi){
     return partsMounted[contDisks];
 }
 
+void mkfs::EXT2format(mkfs *disco)
+{
 
+
+}
+void mkfs::EXT3format(mkfs *disco)
+{
+
+
+}
 void mkfs::formato(mkfs *disco)
 {
     if(disco->id.empty() || disco->id=="" || disco->id==" "|| disco->id=="\n"|| disco->id=="\r"){
@@ -124,14 +133,14 @@ void mkfs::formato(mkfs *disco)
 
     //*2fs: Para el sistema EXT2
     //*Por defecto será ext2.
-    if(disco->fs == "2fs" || disco->fs.empty()){
+    if(disco->fs == "2fs" || disco->fs.empty()==1){
         cout<<"\n   Formateando... (Para el sistema EXT2)\n";
-
+        EXT2format(disco);
 
     }else{
         //*3fs: Para el sistema EXT3
         cout<<"\n   Formateando... (Para el sistema EXT3)\n";
-
+        EXT3format(disco);
 
     }
 

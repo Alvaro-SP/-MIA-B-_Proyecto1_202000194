@@ -18,6 +18,8 @@ public:
     mkfs();
 
     void formato(mkfs *disco);
+    void EXT2format(mkfs *disco);
+    void EXT3format(mkfs *disco);
     MountedPart* obtainMountedPart(string idi);
     DISKMOUNT* obtainMountedDisk(string idi);
 };
