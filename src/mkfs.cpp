@@ -97,12 +97,12 @@ DISKMOUNT* mkfs::obtainMountedDisk(string idi){
 
 void mkfs::EXT2format(mkfs *disco)
 {
-
+    cout<<"\n       Se ha realizado un formateo para el sistema de archivos EXT2\n";
 
 }
 void mkfs::EXT3format(mkfs *disco)
 {
-
+    cout<<"\n       Se ha realizado un formateo para el sistema de archivos EXT3\n";
 
 }
 void mkfs::formato(mkfs *disco)

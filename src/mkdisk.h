@@ -6,6 +6,7 @@
 #include <vector>
 
 using namespace std;
+//! ████████████████████████████████████  INICIO FASE 1  ████████████████████████████████████ 
 //todo ████████████  Struct PARTICION  ████████████ 
 struct PARTITION
 {
@@ -56,12 +57,7 @@ public:
     int start;
 };
 //todo ████████████  Struct del DISKMOUNT  ████████████ 
-// struct DISKMOUNT
-// {
-//     string letra;
-//     string path; 
-//     vector<MOUNT> particiones;
-// } ;
+
 struct DISKMOUNT
 {
 public:
@@ -85,6 +81,49 @@ struct GenPartition{
     char ruta[100];
 	char id[6];
 };
+
+//! ████████████████████████████████████  INICIO FASE 2  ████████████████████████████████████ 
+//todo ████████████  Struct SUPERBLOQUE  ████████████ 
+struct SuperBlock{
+    //  Contiene información sobre la configuración del sistema de archivos. Tendrá los
+    //  siguientes valores:
+    int s_filesystem_type;
+    int s_inodes_count;
+    int s_blocks_count;
+    int s_free_blocks_count;
+    int s_free_inodes_count;
+    char s_mtime[16]; //time
+    char s_umtime[16];//time
+    int s_mnt_count;
+    int s_magic;
+    int s_inode_size;
+    int s_block_size;
+    int s_firts_ino;
+    int s_first_blo;
+    int s_bm_inode_start;
+    int s_bm_block_start;
+    int s_inode_start;
+    int s_block_start;
+};
+//todo ████████████  Struct INODO  ████████████ 
+struct Inodo{
+    int i_uid;
+    int i_gid;    
+    int i_size;
+    char i_atime[16];
+    char i_ctime[16];
+    char i_mtime[16];    
+    int i_block[15];
+    char i_type;
+    int i_perm;
+};
+
+
+
+
+
+
+
 
 //todo ████████████  MKDISK CONSTRUCTOR  ████████████ 
 class mkdisk
