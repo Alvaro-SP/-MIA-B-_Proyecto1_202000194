@@ -4,6 +4,7 @@
 #include "mkdisk.cpp"
 #include "removedisk.cpp"
 #include "rep.cpp"
+#include "login.cpp"
 #include "Fdisk.cpp"
 #include "mkdir.cpp"
 #include "mkfs.cpp"
@@ -690,6 +691,63 @@ void analizer(string mylines) //todo este seria el analizador
 					}
 					
 
+				}else if (mycommand == "login"){
+					/*Este comando se utiliza para iniciar sesión en el sistema. No se puede iniciar
+					otra sesión sin haber hecho un logout antes, si no, debe mostrar un mensaje
+					de error indicando que debe cerrar sesión. Recibirá los Siguientes
+					parámetros:*/
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.Login. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+					cout<<" 		Iniciando sesion ";
+					for (int w = 1; w < 5; w++)
+                    {
+						cout<<" * ";
+						sleep(0.5);
+					}
+					cout<<"\n";
+					login *disco = new login();
+					string usuario ="";
+					string password="";
+					string id="";
+					// mkfs *disco = new mkfs();
+                    for (size_t j = 1; j < comandos.size(); j++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[j], '=');
+						/*-size	Obligatorio	
+						Este parámetro recibirá un número que indicará el tamaño
+						del disco a crear. Debe ser positivo y mayor que cero, si no
+						se mostrará un error.*/
+						if (comando[0] == "-usuario")
+                        {   /*/*Especifica el nombre del usuario que iniciarásesión. */
+                            usuario = (comando[1]);
+                        }//
+						else if (comando[0] == "-password")
+                        {	/*Indicará la contraseña del usuario que inicia sesión.*/
+                            password = comando[1];
+                        }
+						else if (comando[0] == "-id")
+                        {// Indicará el id de la partición montada de la cual van a iniciar sesión.*/
+                            id = comando[1];
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+					try
+					{
+						if(usuario!="" && password!="" && id!=""){
+
+							disco->iniciarsesion(usuario,password,id);
+						}else{
+							cout<<"\nFFFFFFFFFFF El usuario , password o id no deben estar vacios.  FFFFFFFFFFF\n";
+						}
+						// disco->formato(disco);
+						
+					}
+					catch(...)
+					{
+						cout<<"no se pudo ejecutar el MKFS"<<endl;
+					}
 				}else if (mycommand == "mkfile")
                 {
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFILE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
@@ -902,7 +960,7 @@ int main()
 	cout<<"																			 "<<endl;
 	cout<<"					                [̲̅F̲̅][̲̅I̲̅][̲̅U][̲̅S][̲̅A][̲̅C̲̅]              "<<endl<<endl;
 	cout<<"					---------------------------------------------------------"<<endl<<endl;
-	   
+	   cout<<"\nDATO: No dejar espacios entre los parametros, de lo contrario puede que tenga errores, Gracias :D\n";
 	// Ciclo que se repite por cada comando ingresado
 	while(true){
 		try
