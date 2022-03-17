@@ -5,6 +5,7 @@
 #include "removedisk.cpp"
 #include "rep.cpp"
 #include "Fdisk.cpp"
+#include "mkdir.cpp"
 #include "mkfs.cpp"
 #include <cstdlib>
 #include <stdio.h>
@@ -689,7 +690,102 @@ void analizer(string mylines) //todo este seria el analizador
 					}
 					
 
-				}else if(mycommand == "rep"){
+				}else if (mycommand == "mkfile")
+                {
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFILE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+					// Este comando permitirá crear un archivo, el propietario será el usuario que
+					// actualmente ha iniciado sesión. Tendrá los permisos 664. El usuario deberá tener
+					// el permiso de escritura en la carpeta padre, si no debe mostrar un error. Tendrá los
+					// siguientes parámetros
+					string thispath;
+					string thisid;
+                    for (size_t j = 1; j < comandos.size(); j++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[j], '=');
+						/*-size	Obligatorio	
+						Este parámetro recibirá un número que indicará el tamaño
+						del disco a crear. Debe ser positivo y mayor que cero, si no
+						se mostrará un error.*/
+						if (comando[0] == "-r")
+                        {   /*/*Este parámetro recibirá un número que indicará el tamañode la partición 
+							a crear. */
+                            thisid= (comando[1]);
+                        }//
+						else if (comando[0] == "-path")
+                        {	/*Este parámetro recibirá una letra que indicará las unidades
+							que utilizará el parámetro size. */
+                            thispath = comando[1];
+                        } //! Si se ingresan los parámetros cont y size, tendrá mayor prioridad elparámetro cont *
+						else if (comando[0] == "-size")
+                        {// Indicará que tipo de partición se creará.*/
+                            // disco->type = comando[1];
+                        }
+						else if (comando[0] == "-cont")
+                        {// Indicará que tipo de partición se creará.*/
+                            // disco->type = comando[1];
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+				}
+				else if (mycommand == "mkdir")
+                {
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKDIR. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+					//Este comando es similar a mkfile, pero no crea archivos, sino carpetas. El
+					//propietario será el usuario que actualmente ha iniciado sesión. Tendrá los permisos
+					//664. El usuario deberá tener el permiso de escritura en la carpeta padre, si no debe
+					//mostrar un error.
+					string thispath;
+					string thisid;
+                    for (size_t j = 1; j < comandos.size(); j++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[j], '=');
+						/*-size	Obligatorio	
+						Este parámetro recibirá un número que indicará el tamaño
+						del disco a crear. Debe ser positivo y mayor que cero, si no
+						se mostrará un error.*/
+						if (comando[0] == "-id")
+                        {   /*/*Este parámetro recibirá un número que indicará el tamañode la partición 
+							a crear. */
+                            thisid= (comando[1]);
+                        }//
+						else if (comando[0] == "-path")
+                        {	/*Este parámetro recibirá una letra que indicará las unidades
+							que utilizará el parámetro size. */
+                            thispath = comando[1];
+                        }
+						else if (comando[0] == "-p")
+                        {// Indicará que tipo de partición se creará.*/
+                            // disco->type = comando[1];
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+                    
+                    
+                }else if (mycommand == "cat")
+                {
+                   cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.CAT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+                }else if (mycommand == "find")
+                {
+                    cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.FIND. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+                }else if (mycommand == "ren")
+                {
+                    cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REN. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+                }else if (mycommand == "chmod")
+                {
+                    cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.CHMOD. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+                }else if (mycommand == "touch")
+                {
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.TOUCH. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+                    
+                } 
+
+				else if(mycommand == "rep"){
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.REP. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
 					// string pathremove;
 					string nombre;

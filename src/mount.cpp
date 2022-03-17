@@ -20,6 +20,7 @@ MBR* mount::obtainMBR(char path[]){
     fclose(myFile);
     return mbr;
 }
+
 EBR* mount::primerEBR(MBR *disco,string paths){
     int i;
     char* path=&paths[0];
@@ -160,7 +161,7 @@ void mount::montar(mount *disk){
     //     t1.id=llave;
     //     t1.ruta= disk->path;
 		
-
+    cout<<"\nagregado al superbloque\n"<<endl;
 	// 	// fseek(myarchivo,linea,SEEK_END);
 	// 	// fwrite( el apuntador,sizeof(tamanoDeVariable), ElementosAInsertar,myarchivo);
 	// 	fwrite(&t1, sizeof(struct GenPartition), 1, myarchivo);
@@ -171,11 +172,83 @@ void mount::montar(mount *disk){
 	// {
 	// 	cout<<"\nno se pudo crear hay algun dato malo.\n"<<endl;
 	// };
-    cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"\nBravho!!"<<endl;
+
+
+    //*Por ejemplo, al usar mount, debe actualizar s_mtime,
+    cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"\n\nBravho!!"<<endl;
+    //! ███████████████████ MODIFICANDO EL SUPERBLOQUE ████████████████████████
+    char* pathsuper=&disk->path[0];
+    char* namesuper=&disk->name[0];
+    SuperBlock *sb =obtainSuperBlock(pathsuper,namesuper);
+    if(sb==NULL){
+        cout<<"FFFFFFF  Error al obtener el superbloque FFFFFFFFFFF"<<endl;
+        return ;
+    }
+    sb->s_mnt_count = sb->s_mnt_count+1;//*Indica cuantas veces se ha montado el sistema
+
+    //! ████████████  Agregando fecha en el SUPERBLOCK  ████████████
+    time_t tiempo = time(0);
+    struct tm *loc = localtime(&tiempo);
+    char fechacreado[16];
+    strftime(fechacreado, 16, "%d/%m/%y %H:%M:%S", loc);
+    strcpy(sb->s_mtime, fechacreado);//todo Fecha y hora de desmontado
+
+    // char *pathnew = partsMounted[contDisks]->path;
+            
+    // int init =partsMounted[contDisks]->parts[contofParts]->start;
+    
+    FILE * myFile;
+    myFile = fopen (pathsuper,"rb+");
+    if (myFile==NULL)
+    {
+        cout<<"FFFFFFFFFFF  Error al abrir el disco  FFFFFFFFF\n";
+    }
+    fseek(myFile, init, SEEK_SET);
+    fwrite(sb, sizeof(SuperBlock), 1, myFile);
+    
+    fclose (myFile);
+    cout<<"\n todo bien\n";
     return ;
 }
 
 //! ███████████████████████████████████████████  UNMOUNT.  ██████████████████████████████████████████
+
+bool mount::primerPartition(MBR* disco, char name[], int *init){
+    int i;
+    for(i = 0; i < 4; i++){
+        if(disco->mbr_p[i].part_status == '1'){
+            if(strcmp(disco->mbr_p[i].part_name,name)==0){
+                *init = disco->mbr_p[i].part_start;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+SuperBlock* mount::obtainSuperBlock(char path[], char name[]){
+    MBR *disco = obtainMBR(path);
+    SuperBlock *sb = (SuperBlock*)malloc(sizeof(SuperBlock));
+    if(disco==NULL){
+        std::cout<<"Error al leer el disco\n";
+        return NULL;
+    }
+    int init;
+    bool isthepart = primerPartition(disco,name,&init);
+    if(!isthepart){
+        return NULL;
+    }
+    delete disco;
+    FILE *myFile = fopen(path,"rb+");
+    if(myFile==NULL){
+        cout<<"Error al abrir el disco \n";
+        return NULL;
+    }
+    fseek(myFile, init, SEEK_SET);
+    fread(sb, sizeof(SuperBlock), 1, myFile);
+    fclose(myFile);
+    return sb;
+}
 
 void mount::desmontar(string idi){
     // char id[idie.length()];
@@ -216,28 +289,62 @@ void mount::desmontar(string idi){
 
     int tampart= 0;
     bool existePart = true;
-    int contadorPart = 0;
+    int contofParts = 0;
     
     //! mientras las particiones montadas no sean vacias se aumenta el tamano de la particiones
     while((partsMounted[contDisks])->parts[tampart]!=NULL){
         tampart++;
     }
     //* recorro las particiones montadas y si encuentro una particion que coincida con el id entonces si existe.
-    while((partsMounted[contDisks])->parts[contadorPart]!=NULL){
-        if(strcmp((partsMounted[contDisks])->parts[contadorPart]->id,id)==0){
+    while((partsMounted[contDisks])->parts[contofParts]!=NULL){
+        if(strcmp((partsMounted[contDisks])->parts[contofParts]->id,id)==0){
             existePart = false;// si existe
             break;
         }
-        contadorPart++;
+        contofParts++;
     }
-    //! si existe entonces se va a eliminar esa montacion"""
+    //! si existe entonces se va a eliminar esa particion montada"""
     if(!existePart){
-        delete (partsMounted[contDisks])->parts[contadorPart];
-        (partsMounted[contDisks])->parts[contadorPart] = NULL;
+        delete (partsMounted[contDisks])->parts[contofParts];
+        (partsMounted[contDisks])->parts[contofParts] = NULL;
         tampart--; // se disminuye el tamano de la particion.
         //* Pero y si llego a 0?
         if(tampart == 0){
             
+            SuperBlock *sb =obtainSuperBlock(partsMounted[contDisks]->path, partsMounted[contDisks]->parts[contofParts]->name);
+            if(sb==NULL){
+                cout<<" FFFFFFFF  ERROR AL OBTENER EL SUPER BLOQUE FFFFFFFFFFFFFF"<<endl;
+            }
+            
+
+            //! ████████████  Agregando fecha en el SUPERBLOCK  ████████████
+            time_t tiempo = time(0);
+            struct tm *loc = localtime(&tiempo);
+            char fechacreado[16];
+            strftime(fechacreado, 16, "%d/%m/%y %H:%M:%S", loc);
+            strcpy(sb->s_umtime, fechacreado);//todo Fecha y hora de desmontado
+          
+            char *pathnew = partsMounted[contDisks]->path;
+            
+            int init =partsMounted[contDisks]->parts[contofParts]->start;
+            
+            FILE * myFile;
+            myFile = fopen (pathnew,"rb+");
+            if (myFile==NULL)
+            {
+                cout<<"FFFFFFFFFFF  Error al abrir el disco  FFFFFFFFF\n";
+            }
+            fseek(myFile, init, SEEK_SET);
+            fwrite(sb, sizeof(SuperBlock), 1, myFile);
+            
+            fclose (myFile);
+
+
+            while((partsMounted[contDisks])!=NULL){
+                delete partsMounted[contDisks];
+                (partsMounted[contDisks]) = (partsMounted[contDisks+1]);
+            }
+            partsMounted[contDisks] = NULL;
         }
         
     }else{

@@ -16,6 +16,8 @@ public:
    
     mount();
     MBR* obtainMBR(char path[]);
+    SuperBlock* obtainSuperBlock(char path[], char name[]);
+    bool mount::primerPartition(MBR* disco, char name[], int *init);
     EBR* primerEBR(MBR *disco,string paths);
     void desmontar(char id[]);
     char* obtainKey( int numero, char letra);
