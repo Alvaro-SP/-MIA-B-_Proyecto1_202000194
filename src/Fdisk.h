@@ -4,7 +4,7 @@
 #include <string.h>
 #include <string>
 #include <iostream>
-
+// #include <mkdisk.h>
 using namespace std;
 class Fdisk
 {

@@ -944,10 +944,6 @@ void Fdisk::DeletePartition(Fdisk *disco)
         PARTITION part;
        
         
-
-
-
-
         if(!isdeleted){
             for (int i = 0; i < 4; i++)
             {

@@ -17,11 +17,11 @@
 #include <iomanip>
 #include <stdlib.h>
 #include <unistd.h>
-// #include "mount.h"
 #include <cstdio>
 #include <vector>
 #include <bits/stdc++.h>
 #include <stdio.h>
+// #include "mount.h"
 using namespace std;
 
 // "/Downloads/OneDrive_1_2-4-2022/[MIA]HT1_202000194_Codigo/src" g++ -o src main.cpp
@@ -787,6 +787,7 @@ void analizer(string mylines) //todo este seria el analizador
 	}
 }
 
+
 //! █████████████████████████████████████████████    MAIN PRINCIPAL.   ██████████████████████████████████████████
 int main()
 {
@@ -795,16 +796,16 @@ int main()
 	//! 	2.	g++ main.cpp -o main
 	//! 	3.	./main
 	//todo █████████████████████████████████████ MENU PRINCIPAL.  ███████████████████████████████████████
-	cout<<" ◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_"<<endl;
-	cout<<" ◣_◢ ◣_◢ ALVARO EMMANUEL SOCOP PEREZ - 202000194  ◣_◢ ◣_◢"<<endl;
-	cout<<" ◣_◢ ◣_◢       ╔═════════════════════════╗        ◣_◢ ◣_◢"<<endl;
-	cout<<" ◣_◢ ◣_◢       ║BIENVENIDO A MI PROYECTO!║        ◣_◢ ◣_◢"<<endl;
-	cout<<" ◣_◢ ◣_◢       ╚═════════════════════════╝        ◣_◢ ◣_◢"<<endl;
-	cout<<"           ıllıllı (Alvaro Socop) ıllıllı "<<endl;
-	cout<<" ...,,ø¤º°`°º¤ø,¸( LAB. ARCHIVOS B )°º¤ø,¸¸,ø¤º°``''..."<<endl;
-	cout<<""<<endl;
-	cout<<"                   [̲̅F̲̅][̲̅I̲̅][̲̅U][̲̅S][̲̅A][̲̅C̲̅]  "<<endl<<endl;
-
+	cout<<"					 ◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_◣_◢_"<<endl;
+	cout<<"					 ◣_◢ ◣_◢ ALVARO EMMANUEL SOCOP PEREZ - 202000194  ◣_◢ ◣_◢"<<endl;
+	cout<<"					 ◣_◢ ◣_◢       ╔═════════════════════════╗        ◣_◢ ◣_◢"<<endl;
+	cout<<"					 ◣_◢ ◣_◢       ║BIENVENIDO A MI PROYECTO!║        ◣_◢ ◣_◢"<<endl;
+	cout<<"					 ◣_◢ ◣_◢       ╚═════════════════════════╝        ◣_◢ ◣_◢"<<endl;
+	cout<<"					             ıllıllı (Alvaro Socop) ıllıllı 				"<<endl;
+	cout<<"					 ...,,ø¤º°`°º¤ø,¸( LAB. ARCHIVOS B )°º¤ø,¸¸,ø¤º°``''...  "<<endl;
+	cout<<"																				"<<endl;
+	cout<<"					                [̲̅F̲̅][̲̅I̲̅][̲̅U][̲̅S][̲̅A][̲̅C̲̅]              "<<endl<<endl;
+	cout<<"					---------------------------------------------------------"<<endl<<endl;
 	   
 	
 	// Ciclo que se repite por cada comando ingresado
