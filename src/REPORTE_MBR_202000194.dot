@@ -8,7 +8,7 @@ shape=plaintext
 <tr><td colspan="3" bgcolor="blue:cyan">REPORTE DE MBR</td></tr>
 <th><td>Nombre</td><td>Valor</td></th>
 <tr><td bgcolor="lightblue">mbr_tamaño</td><td bgcolor="lightblue">26214400</td></tr>
-<tr><td bgcolor="lightblue">mbr_Fecha_creación</td><td bgcolor="lightblue">17/03/22 00:40:</td></tr>
+<tr><td bgcolor="lightblue">mbr_Fecha_creación</td><td bgcolor="lightblue">17/03/22 20:36:</td></tr>
 <tr><td bgcolor="lightblue">mbr_disk_signature</td><td bgcolor="lightblue">846930886</td></tr>
 <tr><td bgcolor="lightblue">mbr_disk_fit</td><td bgcolor="lightblue">bf</td></tr>
 <tr><td colspan="2" bgcolor="#bcf7c1">particion1</td></tr>

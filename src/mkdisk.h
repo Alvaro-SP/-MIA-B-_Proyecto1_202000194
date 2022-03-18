@@ -118,13 +118,6 @@ struct Inodo{
     int i_perm;
 };
 
-
-
-
-
-
-
-
 //todo ████████████  MKDISK CONSTRUCTOR  ████████████ 
 class mkdisk
     {
@@ -143,9 +136,10 @@ class mkdisk
         void printMBR();
         void crearbin(MBR prueba_mbr);
         void abrirbin();
-
+    
 
     };
+
 
 
 #endif // MKDISK_H

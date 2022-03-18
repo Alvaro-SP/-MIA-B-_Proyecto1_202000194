@@ -614,7 +614,12 @@ void Fdisk::CreatePartition(Fdisk *disco)
         cout << "FFFFFFFFF      La Unidad de tamano de particion es Incorrecta       FFFFFFFFF"<< std::endl;
         return;
     }
+    //* SI DISCO->TYPE NO ESTA LLENO
+    if(disco->type!=""){
 
+    }else{
+        disco->type="p";
+    }
     //! ████████████  VALIDACION DE TIPO DE PARTICION  ████████████
     /*  P: en este caso se creará una partición primaria.
         E: en este caso se creará una partición extendida.

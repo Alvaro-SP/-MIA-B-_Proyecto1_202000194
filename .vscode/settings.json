@@ -12,6 +12,13 @@
         "valarray": "cpp",
         "ratio": "cpp",
         "ostream": "cpp",
-        "any": "cpp"
+        "any": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "cstdio": "cpp",
+        "iosfwd": "cpp",
+        "thread": "cpp"
     }
 }

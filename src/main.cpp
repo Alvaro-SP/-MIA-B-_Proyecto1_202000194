@@ -9,6 +9,7 @@
 #include "mkdir.cpp"
 #include "mkfs.cpp"
 #include <cstdlib>
+#include "varsesion.cpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -746,7 +747,85 @@ void analizer(string mylines) //todo este seria el analizador
 					}
 					catch(...)
 					{
-						cout<<"no se pudo ejecutar el MKFS"<<endl;
+						cout<<"no se pudo ejecutar el LOGIN"<<endl;
+					}
+				}else if (mycommand == "logout"){
+					/*Este comando se utiliza para iniciar sesión en el sistema. No se puede iniciar
+					otra sesión sin haber hecho un logout antes, si no, debe mostrar un mensaje
+					de error indicando que debe cerrar sesión. Recibirá los Siguientes
+					parámetros:*/
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.Logout. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+					cout<<" 		Cerrando sesion ";
+					for (int w = 1; w < 5; w++)
+                    {
+						cout<<" * ";
+						sleep(0.5);
+					}
+					cout<<"\n";
+					login *disco = new login();
+					
+					try
+					{
+						
+						disco->cerrarsesion();
+						
+					}
+					catch(...)
+					{
+						cout<<"no se pudo ejecutar el LOGOUT"<<endl;
+					}
+				}else if(mycommand == "mkusr"){
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKUSR. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
+					cout<<" 		";
+					// for (int w = 1; w < 5; w++)
+                    // {
+					// 	cout<<" * ";
+					// 	sleep(0.5);
+					// }
+					// cout<<"\n";
+					login *disco = new login();
+					string usuario ="";
+					string password="";
+					string grp="";
+					// mkfs *disco = new mkfs();
+                    for (size_t j = 1; j < comandos.size(); j++)
+                    {
+                        vector<string> comando = splitSimulated5(comandos[j], '=');
+						/*-size	Obligatorio	
+						Este parámetro recibirá un número que indicará el tamaño
+						del disco a crear. Debe ser positivo y mayor que cero, si no
+						se mostrará un error.*/
+						if (comando[0] == "-usuario")
+                        {   /*/*Especifica el nombre del usuario que iniciarásesión. */
+                            usuario = (comando[1]);
+                        }//
+						else if (comando[0] == "-pwd")
+                        {	/*Indicará la contraseña del usuario que inicia sesión.*/
+                            password = comando[1];
+                        }
+						else if (comando[0] == "-grp")
+                        {// Indicará el id de la partición montada de la cual van a iniciar sesión.*/
+                            grp = comando[1];
+                        }
+                        else
+                        {
+                            cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
+                        }
+                    }
+					try
+					{
+						if(usuario!="" && password!="" && grp!=""){
+
+							disco->addUser( usuario,password,grp);
+						}else{
+							cout<<"\nFFFFFFFFFFF El usuario , password o id no deben estar vacios.  FFFFFFFFFFF\n";
+						}
+						// disco->formato(disco);
+						
+					}
+					catch(...)
+					{
+						cout<<"no se pudo ejecutar el LOGIN"<<endl;
 					}
 				}else if (mycommand == "mkfile")
                 {
