@@ -1,6 +1,5 @@
 #include "mkfs.h"
 #include "math.h"
-#include "v.cpp"
 #include "v.h"
 #include "mkdisk.h"
 #include <cstdio>

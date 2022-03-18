@@ -328,30 +328,29 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
 
     int i;
     PARTITION part;
-    char colors[4][10];
+    // char colors[4][10];
     
-    for(int i = 0; i < 10; i++)
-        {
-            colors[0][i] = 0;
-        }
-    strcat(colors[0],"#bcf7c1");
-    for(int i = 0; i < 10; i++)
-        {
-            colors[1][i] = 0;
-        }
-    strcat(colors[1],"#f8fc92");
-    for(int i = 0; i < 10; i++)
-        {
-            colors[2][i] = 0;
-        }
-    strcat(colors[2],"#fcc292");
-    for(int i = 0; i < 10; i++)
-        {
-            colors[3][i] = 0;
-        }
-    strcat(colors[3],"#dfbcf7");
+    // for(int i = 0; i < 10; i++)
+    //     {
+    //         colors[0][i] = 0;
+    //     }
+    // strcat(colors[0],"#bcf7c1");
+    // for(int i = 0; i < 10; i++)
+    //     {
+    //         colors[1][i] = 0;
+    //     }
+    // strcat(colors[1],"#f8fc92");
+    // for(int i = 0; i < 10; i++)
+    //     {
+    //         colors[2][i] = 0;
+    //     }
+    // strcat(colors[2],"#fcc292");
+    // for(int i = 0; i < 10; i++)
+    //     {
+    //         colors[3][i] = 0;
+    //     }
+    // strcat(colors[3],"#dfbcf7");
     cout<<"\n Generando el Dot..."<<endl;
-    sleep(2);
     for(i=0;i<4;i++){
         // if(part.part_type=='p'||part.part_type=='P'||part.part_type=='E'||part.part_type=='e'){
         //     for(int j = 0; j < 10; i++)
@@ -373,7 +372,9 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
 
         //* SETEO EL NOMBRE DE LA PARTICION
         fputs("<tr><td colspan=\"2\" bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+
+        fputs("#37D134",myFile);
+        
         fputs("\">",myFile);
 
 
@@ -392,49 +393,51 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
         fputs("</td></tr>\n",myFile);
         
         fputs("<tr><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">part_status</td><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        
+        fputs("#79F784",myFile);
         fputs("\">",myFile);
         fprintf(myFile, "%c", part.part_status);
         fputs("</td></tr>\n",myFile);
         
         fputs("<tr><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
+        fputs("#79F784",myFile);
         fputs("\">part_type</td><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">",myFile);
         fprintf(myFile, "%c", part.part_type);
         fputs("</td></tr>\n",myFile);
    
         fputs("<tr><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">part_fit</td><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">",myFile);
         fprintf(myFile, "%c", part.part_fit);
         fputs("</td></tr>\n",myFile);
         
         fputs("<tr><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">part_start</td><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">",myFile);
         fprintf(myFile, "%d", part.part_start);
         fputs("</td></tr>\n",myFile);
         
         fputs("<tr><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">part_size</td><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">",myFile);
         fputs(&to_string(part.part_size)[0],myFile);
         fputs("</td></tr>\n",myFile);
 
         fputs("<tr><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">part_name</td><td bgcolor=\"",myFile);
-        fputs(colors[i],myFile);
+        fputs("#79F784",myFile);
         fputs("\">",myFile);
         fprintf(myFile, "%s", part.part_name);
         fputs("</td></tr>\n",myFile);
@@ -457,16 +460,12 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
             // fputs("</td></tr>\n",myFile);
             while(ebr!=NULL){
                 
-                
-            
-
-
                 fputs("<tr><td colspan=\"3\">",myFile);
                 fputs(ebr->part_name,myFile);
                 fputs("</td></tr>\n",myFile);
                 fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
             
-                fputs("<tr><td bgcolor=\"#fcc8c8\">part_status</td><td bgcolor=\"#fcc8c8\">",myFile);
+                fputs("<tr><td bgcolor=\"#F9A148\">part_status</td><td bgcolor=\"#F9A148\">",myFile);
                 fprintf(myFile, "%c", ebr->part_status);
                 fputs("</td></tr>\n",myFile);
 
@@ -474,19 +473,19 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
                 // fprintf(myFile, "%c", ebr->pa);
                 // fputs("</td></tr>\n",myFile);
                 
-                fputs("<tr><td bgcolor=\"#fcc8c8\">part_fit</td><td bgcolor=\"#fcc8c8\">",myFile);
+                fputs("<tr><td bgcolor=\"#F9A148\">part_fit</td><td bgcolor=\"#F9A148\">",myFile);
                 fprintf(myFile, "%c", ebr->part_fit);
                 fputs("</td></tr>\n",myFile);
-                fputs("<tr><td bgcolor=\"#fcc8c8\">part_start",myFile);
-                fputs("</td><td bgcolor=\"#fcc8c8\">",myFile);
+                fputs("<tr><td bgcolor=\"#F9A148\">part_start",myFile);
+                fputs("</td><td bgcolor=\"#F9A148\">",myFile);
                 fprintf(myFile, "%d", ebr->part_start);
                 fputs("</td></tr>\n",myFile);
             
-                fputs("<tr><td bgcolor=\"#fcc8c8\">part_size</td><td bgcolor=\"#fcc8c8\">",myFile);
+                fputs("<tr><td bgcolor=\"#F9A148\">part_size</td><td bgcolor=\"#F9A148\">",myFile);
                 fputs(&to_string(ebr->part_size)[0],myFile);
                 fputs("</td></tr>\n",myFile);
                 
-                fputs("<tr><td bgcolor=\"#fcc8c8\">part_next</td><td bgcolor=\"#fcc8c8\">",myFile);
+                fputs("<tr><td bgcolor=\"#F9A148\">part_next</td><td bgcolor=\"#F9A148\">",myFile);
                 fprintf(myFile, "%d", ebr->part_next);
                 fputs("</td></tr>\n",myFile);
                 
@@ -648,7 +647,6 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
     string command = "dot -T"+tipodesalida+" REPORTE_MBR_202000194.dot -o \""+pathString+"\"";
     system(command.c_str());
     cout<<"\n Generando la imagen..."<<endl;
-    sleep(2);
     cout<<"\n Se ha generado el Reporte de MBR sin problemas, vaya a: \n\t\t"<<pathString<<"  para verlo"<<endl;
     // i++;
     }else{
@@ -1115,7 +1113,6 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
             }
         strcat(colors[3],"#dfbcf7");
         cout<<"\n Generando el Dot..."<<endl;
-        sleep(2);
 
 
         // MBR mbr;
@@ -1254,7 +1251,7 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
 
                 if(i==3){
                     // porcentajeTotal += porcentaje;
-                    fputs("| No utilizable \\n ", myFile);
+                    fputs("| Libre \\n ", myFile);
                     fprintf(myFile, "%d", 100-totPrimExt);
                     fputs("%", myFile);
                 }

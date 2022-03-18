@@ -49,7 +49,7 @@ void Sesion::cerrar()
 class User{
 public:
     std::string id;
-    char type;
+    std::string type;
     std::string name;
     std::string password;
     std::string group;
@@ -72,10 +72,12 @@ public:
     bool existeunaActiva();
     void cerrarsesion();
     MountedPart* obtainMountedPart(string idi);
+    vector<string> splitSimulated5(string myargument, char quitar);
     void addUser(string usuario , string password ,string grp);
+    string quitarcomilla(string cad);
     DISKMOUNT* obtainMountedDisk(string idi);
     void iniciarsesion(string usuario,string password,string id);
-    User* searchUsuario(char usr[],char path[],char namePartition[]);
+    User* searchUsuario(string usr,string path,string namePartition,string pass);
     vector<string> buscarUser(char usr[]);
     // void formato(mkfs *disco);
     // void EXT2format(mkfs *disco);

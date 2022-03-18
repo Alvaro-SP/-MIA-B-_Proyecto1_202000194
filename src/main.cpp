@@ -9,7 +9,8 @@
 #include "mkdir.cpp"
 #include "mkfs.cpp"
 #include <cstdlib>
-#include "varsesion.cpp"
+// #include "v.cpp"
+// #include "varsesion.cpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -702,6 +703,7 @@ void analizer(string mylines) //todo este seria el analizador
 					for (int w = 1; w < 5; w++)
                     {
 						cout<<" * ";
+						cout<<endl;
 						sleep(0.5);
 					}
 					cout<<"\n";
@@ -812,21 +814,21 @@ void analizer(string mylines) //todo este seria el analizador
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
-					try
-					{
+					// try
+					// {
 						if(usuario!="" && password!="" && grp!=""){
-
+							
 							disco->addUser( usuario,password,grp);
 						}else{
 							cout<<"\nFFFFFFFFFFF El usuario , password o id no deben estar vacios.  FFFFFFFFFFF\n";
 						}
 						// disco->formato(disco);
 						
-					}
-					catch(...)
-					{
-						cout<<"no se pudo ejecutar el LOGIN"<<endl;
-					}
+					// }
+					// catch(...)
+					// {
+					// 	cout<<"no se pudo ejecutar el LOGIN"<<endl;
+					// }
 				}else if (mycommand == "mkfile")
                 {
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFILE. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;

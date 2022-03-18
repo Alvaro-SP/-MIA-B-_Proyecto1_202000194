@@ -4,5 +4,9 @@
 
 
 extern Sesion *active_sesion;
-
+// class varsesion
+// {
+// public:
+//     varsesion();
+// };
 #endif 

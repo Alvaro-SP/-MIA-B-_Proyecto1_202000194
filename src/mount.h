@@ -4,7 +4,8 @@
 #include <string>
 #include "mkdisk.h"
 #include "Fdisk.h"
-
+#include "v.cpp"
+#include "varsesion.cpp"
 
 // using namespace std;
 class mount
