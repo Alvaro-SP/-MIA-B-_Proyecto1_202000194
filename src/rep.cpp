@@ -280,7 +280,8 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
     }
 
     FILE *myFile;
-    myFile =  fopen("REPORTE_MBR_202000194.dot","w+");
+    string namedot= "REPORTE_MBR_202000194_"+idi+".dot";
+    myFile =  fopen(&namedot[0],"w+");
     if (myFile==NULL)
     {
         cout<<"Error al crear el archivo\n";
@@ -369,7 +370,8 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
         // if(strcmp((part.part_status , id)==0)
         
         if(part.part_status == '0') continue;
-
+        
+        
         //* SETEO EL NOMBRE DE LA PARTICION
         fputs("<tr><td colspan=\"2\" bgcolor=\"",myFile);
 
@@ -644,7 +646,7 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
     fclose (myFile);
     string pathString(path);
     string tipodesalida=pathString.substr(pathString.size()-3, pathString.size());
-    string command = "dot -T"+tipodesalida+" REPORTE_MBR_202000194.dot -o \""+pathString+"\"";
+    string command = "dot -T"+tipodesalida+" REPORTE_MBR_202000194_"+idi+".dot -o \""+pathString+"\"";
     system(command.c_str());
     cout<<"\n Generando la imagen..."<<endl;
     cout<<"\n Se ha generado el Reporte de MBR sin problemas, vaya a: \n\t\t"<<pathString<<"  para verlo"<<endl;
@@ -1090,28 +1092,7 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
 
         int i;
         PARTITION part;
-        char colors[4][10];
         
-        for(int i = 0; i < 10; i++)
-            {
-                colors[0][i] = 0;
-            }
-        strcat(colors[0],"#bcf7c1");
-        for(int i = 0; i < 10; i++)
-            {
-                colors[1][i] = 0;
-            }
-        strcat(colors[1],"#f8fc92");
-        for(int i = 0; i < 10; i++)
-            {
-                colors[2][i] = 0;
-            }
-        strcat(colors[2],"#fcc292");
-        for(int i = 0; i < 10; i++)
-            {
-                colors[3][i] = 0;
-            }
-        strcat(colors[3],"#dfbcf7");
         cout<<"\n Generando el Dot..."<<endl;
 
 
@@ -1134,11 +1115,30 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
             part = disco->mbr_p[i];
             cout<<" el "<< i << "disco"<<endl;
             porcentaje = 0;
+            bool externaesta=false;
+            for (size_t i = 0; i < extdelete.size(); i++)
+            {
+                
+                string temp = part.part_name;
+                cout<<"comparando: "<< temp <<" con "<< extdelete[i]<<endl;
+                if(temp == extdelete[i]){
+                    externaesta=true;
+                    break;
+                }
+            }
             if (part.part_status == '1')
             {
                 continua = false;
-                
-                if (part.part_type == 'P')
+                if(externaesta){
+                    porcentaje = part.part_size / (disco->mbr_tamano / 100);
+                    porcentajeTotal += porcentaje;                    
+                    
+                    totPrimExt+=porcentaje;
+                    fputs("| Libre \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+
+                    fputs("%", myFile);
+                }else if (part.part_type == 'P' || part.part_type=='p')
                 {
                     porcentaje = part.part_size / (disco->mbr_tamano / 100);
                     porcentajeTotal += porcentaje;
@@ -1168,7 +1168,18 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
                     int porcentajeLogicas=0;
                     while(ebr!=NULL){
                         cout<<" recorriendo las logicas del ebr"<<ebr->part_name<<endl;
-                        if (ebr->part_status == '0')
+                        bool externaesta2=false;
+                        for (size_t i = 0; i < extdelete.size(); i++)
+                        {
+                            string temp2 = ebr->part_name ;
+                            cout<<"comparando: "<< temp2 <<" con "<< extdelete[i]<<endl;
+                            if(temp2 == extdelete[i]){
+                                externaesta2=true;
+                                break;
+                            }
+                           
+                        }
+                        if (ebr->part_status == '0' )
                         {
                             if(ebr->part_next!=-1){
                                 int porcentaje = ebr->part_size / (disco->mbr_tamano  / 100);
@@ -1204,11 +1215,20 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
                         {
                             if (ebr->part_next != -1)
                             {
-                                int porcentaje=ebr->part_size / (disco->mbr_tamano / 100);
-                                fputs("EBR | Logica \\n", myFile);
-                                fprintf(myFile, "%d", porcentaje);
-                                fputs("% |", myFile);
-                                porcentajeLogicas+=porcentaje;
+                                if(externaesta2){
+                                    int porcentaje=ebr->part_size / (disco->mbr_tamano / 100);
+                                    fputs("EBR | Libre \\n", myFile);
+                                    fprintf(myFile, "%d", porcentaje);
+                                    fputs("% |", myFile);
+                                    porcentajeLogicas+=porcentaje;
+                                }else{
+                                    int porcentaje=ebr->part_size / (disco->mbr_tamano / 100);
+                                    fputs("EBR | Logica \\n", myFile);
+                                    fprintf(myFile, "%d", porcentaje);
+                                    fputs("% |", myFile);
+                                    porcentajeLogicas+=porcentaje;
+                                }
+                                
                                 
 
                                 FILE *myFile = fopen(pathg,"rb+");
@@ -1256,72 +1276,72 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
                     fputs("%", myFile);
                 }
             }
-            else
-            {
-                if (i == 0)
-                {
+            // else
+            // {
+            //     if (i == 0)
+            //     {
                     
-                    int tota = 1;
-                    for (int j = 1; j < 4; j++)
-                    {
-                        if (disco->mbr_p[j].part_status == '1')
-                        {
-                            int espacio_disp = disco->mbr_p[j].part_start - sizeof(disco);
+            //         int tota = 1;
+            //         for (int j = 1; j < 4; j++)
+            //         {
+            //             if (disco->mbr_p[j].part_status == '1')
+            //             {
+            //                 int espacio_disp = disco->mbr_p[j].part_start - sizeof(disco);
 
-                            porcentaje = espacio_disp / (disco->mbr_tamano / 100);
-                            porcentajeTotal += porcentaje;
-                            continua = true;
-                            break;
-                        }
-                        else
-                        {
-                            tota += 1;
-                        }
-                    }
+            //                 porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+            //                 porcentajeTotal += porcentaje;
+            //                 continua = true;
+            //                 break;
+            //             }
+            //             else
+            //             {
+            //                 tota += 1;
+            //             }
+            //         }
 
-                    if (tota == 4)
-                    {
-                        break;
-                    }
-                    fputs("| Libre \\n ", myFile);
-                    fprintf(myFile, "%d", porcentaje);
-                    fputs("%", myFile);
+            //         if (tota == 4)
+            //         {
+            //             break;
+            //         }
+            //         fputs("| Libre \\n ", myFile);
+            //         fprintf(myFile, "%d", porcentaje);
+            //         fputs("%", myFile);
                     
-                }
-                else
-                {
-                    if (continua == false)
-                    {
+            //     }
+            //     else
+            //     {
+            //         if (continua == false)
+            //         {
 
-                        if (i < 3)
-                        {
-                            int inicio = disco->mbr_p[i - 1].part_start + disco->mbr_p[i - 1].part_size;
-                            int espacio_disp = disco->mbr_tamano - inicio;
+            //             if (i < 3)
+            //             {
+            //                 int inicio = disco->mbr_p[i - 1].part_start + disco->mbr_p[i - 1].part_size;
+            //                 int espacio_disp = disco->mbr_tamano - inicio;
 
-                            porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+            //                 porcentaje = espacio_disp / (disco->mbr_tamano / 100);
 
 
-                            for (int j = i; j < 4; j++)
-                            {
-                                if (disco->mbr_p[j].part_status == '1')
-                                {
-                                    espacio_disp = disco->mbr_p[j].part_start - inicio;
-                                    porcentaje = espacio_disp / (disco->mbr_tamano / 100);
-                                    continua = true;
-                                    break;
-                                }
-                            }
+            //                 for (int j = i; j < 4; j++)
+            //                 {
+            //                     if (disco->mbr_p[j].part_status == '1')
+            //                     {
+            //                         espacio_disp = disco->mbr_p[j].part_start - inicio;
+            //                         porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+            //                         continua = true;
+            //                         break;
+            //                     }
+            //                 }
 
-                            porcentajeTotal += porcentaje;
-                            fputs("| Libre \\n ", myFile);
-                            fprintf(myFile, "%d", 100-totPrimExt);
-                            fputs("%", myFile);
+            //                 porcentajeTotal += porcentaje;
+            //                 fputs("| Libre \\n ", myFile);
+            //                 fprintf(myFile, "%d", 100-totPrimExt);
+            //                 fputs("%", myFile);
                             
-                        }
+            //             }
                         
-                    }
-                }
-            }
+            //         }
+            //     }
+            // }
 
 
         }

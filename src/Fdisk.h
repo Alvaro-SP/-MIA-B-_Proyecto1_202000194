@@ -27,7 +27,6 @@ public:
     void ExtendPartition(Fdisk *disco);
     void deleteFast(FILE *archivo, int pos);
     void deleteFull(FILE *archivo, int pos);
-    int searchLogicPartitionsDelete(Fdisk *disco, FILE *archivo, int inicio);
     void DeletePartition(Fdisk *disco);
     bool StateInactiveCreate(int i, int espacio_disp, MBR mbr, int p_gen_tam, bool p_existe , Fdisk *disco, FILE *archivo, int hayespaciodisp);         
     void genrep();

@@ -7,31 +7,38 @@ shape=plaintext
 <table border='0' cellborder='1' cellspacing='0'>
 <tr><td colspan="3" bgcolor="blue:cyan">REPORTE DE MBR</td></tr>
 <th><td>Nombre</td><td>Valor</td></th>
-<tr><td bgcolor="lightblue">mbr_tamaño</td><td bgcolor="lightblue">20971520</td></tr>
-<tr><td bgcolor="lightblue">mbr_Fecha_creación</td><td bgcolor="lightblue">18/03/22 13:08:</td></tr>
+<tr><td bgcolor="lightblue">mbr_tamaño</td><td bgcolor="lightblue">26214400</td></tr>
+<tr><td bgcolor="lightblue">mbr_Fecha_creación</td><td bgcolor="lightblue">18/03/22 17:38:</td></tr>
 <tr><td bgcolor="lightblue">mbr_disk_signature</td><td bgcolor="lightblue">1681692777</td></tr>
-<tr><td bgcolor="lightblue">mbr_disk_fit</td><td bgcolor="lightblue">bf</td></tr>
-<tr><td colspan="2" bgcolor="#37D134">partprimne</td></tr>
+<tr><td bgcolor="lightblue">mbr_disk_fit</td><td bgcolor="lightblue">wf</td></tr>
+<tr><td colspan="2" bgcolor="#37D134">part1deldisco2</td></tr>
 <tr><td bgcolor="#79F784">part_status</td><td bgcolor="#79F784">1</td></tr>
 <tr><td bgcolor="#79F784#79F784">part_type</td><td bgcolor="#79F784">P</td></tr>
-<tr><td bgcolor="#79F784">part_fit</td><td bgcolor="#79F784">f</td></tr>
+<tr><td bgcolor="#79F784">part_fit</td><td bgcolor="#79F784">b</td></tr>
 <tr><td bgcolor="#79F784">part_start</td><td bgcolor="#79F784">140</td></tr>
-<tr><td bgcolor="#79F784">part_size</td><td bgcolor="#79F784">8388608</td></tr>
-<tr><td bgcolor="#79F784">part_name</td><td bgcolor="#79F784">partprimne</td></tr>
-<tr><td colspan="2" bgcolor="#37D134">partextnew</td></tr>
+<tr><td bgcolor="#79F784">part_size</td><td bgcolor="#79F784">5242880</td></tr>
+<tr><td bgcolor="#79F784">part_name</td><td bgcolor="#79F784">part1deldisco2</td></tr>
+<tr><td colspan="2" bgcolor="#37D134">part1ext</td></tr>
 <tr><td bgcolor="#79F784">part_status</td><td bgcolor="#79F784">1</td></tr>
 <tr><td bgcolor="#79F784#79F784">part_type</td><td bgcolor="#79F784">e</td></tr>
-<tr><td bgcolor="#79F784">part_fit</td><td bgcolor="#79F784">f</td></tr>
+<tr><td bgcolor="#79F784">part_fit</td><td bgcolor="#79F784">b</td></tr>
 <tr><td bgcolor="#79F784">part_start</td><td bgcolor="#79F784">280</td></tr>
 <tr><td bgcolor="#79F784">part_size</td><td bgcolor="#79F784">10485760</td></tr>
-<tr><td bgcolor="#79F784">part_name</td><td bgcolor="#79F784">partextnew</td></tr>
-<tr><td colspan="3">partlog</td></tr>
+<tr><td bgcolor="#79F784">part_name</td><td bgcolor="#79F784">part1ext</td></tr>
+<tr><td colspan="3">part1logic</td></tr>
 <th><td>Nombre</td><td>Valor</td></th>
 <tr><td bgcolor="#F9A148">part_status</td><td bgcolor="#F9A148">1</td></tr>
-<tr><td bgcolor="#F9A148">part_fit</td><td bgcolor="#F9A148">f</td></tr>
+<tr><td bgcolor="#F9A148">part_fit</td><td bgcolor="#F9A148">b</td></tr>
 <tr><td bgcolor="#F9A148">part_start</td><td bgcolor="#F9A148">312</td></tr>
-<tr><td bgcolor="#F9A148">part_size</td><td bgcolor="#F9A148">2097152</td></tr>
-<tr><td bgcolor="#F9A148">part_next</td><td bgcolor="#F9A148">2097464</td></tr>
+<tr><td bgcolor="#F9A148">part_size</td><td bgcolor="#F9A148">3145728</td></tr>
+<tr><td bgcolor="#F9A148">part_next</td><td bgcolor="#F9A148">3146040</td></tr>
+<tr><td colspan="3">part2logic</td></tr>
+<th><td>Nombre</td><td>Valor</td></th>
+<tr><td bgcolor="#F9A148">part_status</td><td bgcolor="#F9A148">1</td></tr>
+<tr><td bgcolor="#F9A148">part_fit</td><td bgcolor="#F9A148">b</td></tr>
+<tr><td bgcolor="#F9A148">part_start</td><td bgcolor="#F9A148">3146072</td></tr>
+<tr><td bgcolor="#F9A148">part_size</td><td bgcolor="#F9A148">3145728</td></tr>
+<tr><td bgcolor="#F9A148">part_next</td><td bgcolor="#F9A148">6291800</td></tr>
 <tr><td colspan="3"></td></tr>
 <th><td>Nombre</td><td>Valor</td></th>
 <tr><td bgcolor="#F9A148">part_status</td><td bgcolor="#F9A148">0</td></tr>
@@ -50,13 +57,13 @@ shape=plaintext
 <table border='0' cellborder='1' cellspacing='0'>
 <tr><td colspan="3">REPORTE DE EBRS</td></tr>
 <th><td>Nombre</td><td>Valor</td></th>
-<tr><td colspan="3">partextnew</td></tr>
+<tr><td colspan="3">part1ext</td></tr>
 <tr><td bgcolor="#bcf7c1">part_status</td><td bgcolor="#bcf7c1">1</td></tr>
 <tr><td bgcolor="#bcf7c1">part_type</td><td bgcolor="#bcf7c1">e</td></tr>
-<tr><td bgcolor="#bcf7c1">part_fit</td><td bgcolor="#bcf7c1">f</td></tr>
+<tr><td bgcolor="#bcf7c1">part_fit</td><td bgcolor="#bcf7c1">b</td></tr>
 <tr><td bgcolor="#bcf7c1">part_start</td><td bgcolor="#bcf7c1">280</td></tr>
 <tr><td bgcolor="#bcf7c1">part_size</td><td bgcolor="#bcf7c1">10485760</td></tr>
-<tr><td bgcolor="#bcf7c1">part_name</td><td bgcolor="#bcf7c1">partextnew</td></tr>
+<tr><td bgcolor="#bcf7c1">part_name</td><td bgcolor="#bcf7c1">part1ext</td></tr>
 </table>
 >];
 }

@@ -79,7 +79,7 @@ void mount::montar(mount *disk){
         partsMounted[contador] = new DISKMOUNT();
         strcpy(partsMounted[contador]->path,disk->path.c_str());
         // partsMounted[contador]->letter = tolower(65+contador); //manipulacion de mis letras usando los ASCII
-        partsMounted[contador]->num = contador;
+        partsMounted[contador]->num = contador+1;
     }
     
 

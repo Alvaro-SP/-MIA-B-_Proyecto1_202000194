@@ -10,6 +10,6 @@ digraph migraph{
  fontcolor="white"
  style="filled"
   node[shape=record fillcolor="red:yellow" style="filled" gradientangle=90]
- nod[label="MBR \n | Primaria \n 40%| { Extendida \n 50% | {EBR | Logica \n10% |Libre40% | } } | Libre \n 10%" ];
+ nod[label="MBR \n | Primaria \n 10%| Primaria \n 10%| { Extendida \n 30% | {EBR | Logica \n2% |EBR | Logica \n2% |EBR | Logica \n2% |EBR | Logica \n2% |EBR | Logica \n2% |EBR | Logica \n6% |Libre14% | } } | Primaria \n 16%| Libre \n 34%" ];
 }
 }

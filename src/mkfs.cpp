@@ -1,5 +1,7 @@
 #include "mkfs.h"
 #include "math.h"
+#include "v.cpp"
+#include "varsesion.cpp"
 #include "v.h"
 #include "mkdisk.h"
 #include <cstdio>
