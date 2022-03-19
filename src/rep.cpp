@@ -1056,7 +1056,8 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
     //! ████████████ ABRO EL DOT PARA SETEARLE EL REPORTE ████████████
 
     FILE *myFile;
-    myFile =  fopen("REPORTE_DISKS_202000194.dot","w+");
+    string namedot= "REPORTE_DISKS_202000194_"+idi+".dot";
+    myFile =  fopen(&namedot[0],"w+");
     if (myFile==NULL)
     {
         cout<<"Error al crear el archivo\n";
@@ -1357,7 +1358,7 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
         fclose (myFile);
         string pathString(path);
         string tipodesalida=pathString.substr(pathString.size()-3, pathString.size());
-        string command = "dot -T"+tipodesalida+" REPORTE_DISKS_202000194.dot -o \""+pathString+"\"";
+        string command = "dot -T"+tipodesalida+" REPORTE_DISKS_202000194_"+idi+".dot -o \""+pathString+"\"";
         system(command.c_str());
         cout<<"\n Generando la imagen..."<<endl;
         sleep(2);

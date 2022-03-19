@@ -1059,6 +1059,7 @@ void Fdisk::DeletePartition(Fdisk *disco)
                     
                     EBR *ebr = primerEBR(mbr,disco->path.c_str());
                     while(ebr!=NULL){
+                        extdelete.push_back(ebr->part_name);
                         //  if ebr->part_name == disco->name)
                         if(strcmp(ebr->part_name,disco->name.c_str())==0){
                             int init=ebr->part_start;
@@ -1306,9 +1307,5 @@ void Fdisk::ExtendPartition(Fdisk *disco){
 
     
 }
-
-
-
-
 
 
