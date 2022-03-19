@@ -568,8 +568,8 @@ void Fdisk::CreatePartition(Fdisk *disco)
     //? Deberá tener en cuenta las restricciones de teoría de particiones:
     for (int i = 0; i < 4; i++)//!solo son 4 particiones, entonces las recorro.
     {
-        cout<<mbr.mbr_p[i].part_name<<endl;
-        cout<<i<<endl;
+        // cout<<mbr.mbr_p[i].part_name<<endl;
+        // cout<<i<<endl;
         // La suma de primarias y extendidas debe ser como máximo 4.
         if (mbr.mbr_p[i].part_name == disco->name)//!si el nombre de la particion mbr  es igual al nombre
         {
@@ -1107,7 +1107,13 @@ void Fdisk::DeletePartition(Fdisk *disco)
                     }
                 }
 
-                
+                if (mbr->mbr_p[i].part_name == disco->name)
+                {
+                    
+                    eliminada=true;
+                    break;
+                }
+
             }
         
         }

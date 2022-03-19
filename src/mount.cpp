@@ -176,38 +176,38 @@ void mount::montar(mount *disk){
 
     //*Por ejemplo, al usar mount, debe actualizar s_mtime,
     cout<<"Se ha montado la particion: "<<disk->name<<" correctamente, el id es: "<<llave<<"\n\nBravho!!"<<endl;
-    //! ███████████████████ MODIFICANDO EL SUPERBLOQUE ████████████████████████
-    char* pathsuper=&disk->path[0];
-    char* namesuper=&disk->name[0];
-    SuperBlock *sb =obtainSuperBlock(pathsuper,namesuper);
-    if(sb==NULL){
-        cout<<"FFFFFFF  Error al obtener el superbloque FFFFFFFFFFF"<<endl;
-        return ;
-    }
-    sb->s_mnt_count = sb->s_mnt_count+1;//*Indica cuantas veces se ha montado el sistema
+    // //! ███████████████████ MODIFICANDO EL SUPERBLOQUE ████████████████████████
+    // char* pathsuper=&disk->path[0];
+    // char* namesuper=&disk->name[0];
+    // SuperBlock *sb =obtainSuperBlock(pathsuper,namesuper);
+    // if(sb==NULL){
+    //     // cout<<"FFFFFFF  Error al obtener el superbloque FFFFFFFFFFF"<<endl;
+    //     return ;
+    // }
+    // sb->s_mnt_count = sb->s_mnt_count+1;//*Indica cuantas veces se ha montado el sistema
 
-    //! ████████████  Agregando fecha en el SUPERBLOCK  ████████████
-    time_t tiempo = time(0);
-    struct tm *loc = localtime(&tiempo);
-    char fechacreado[16];
-    strftime(fechacreado, 16, "%d/%m/%y %H:%M:%S", loc);
-    strcpy(sb->s_mtime, fechacreado);//todo Fecha y hora de desmontado
+    // //! ████████████  Agregando fecha en el SUPERBLOCK  ████████████
+    // time_t tiempo = time(0);
+    // struct tm *loc = localtime(&tiempo);
+    // char fechacreado[16];
+    // strftime(fechacreado, 16, "%d/%m/%y %H:%M:%S", loc);
+    // strcpy(sb->s_mtime, fechacreado);//todo Fecha y hora de desmontado
 
-    // char *pathnew = partsMounted[contDisks]->path;
+    // // char *pathnew = partsMounted[contDisks]->path;
             
-    // int init =partsMounted[contDisks]->parts[contofParts]->start;
+    // // int init =partsMounted[contDisks]->parts[contofParts]->start;
     
-    FILE * myFile;
-    myFile = fopen (pathsuper,"rb+");
-    if (myFile==NULL)
-    {
-        cout<<"FFFFFFFFFFF  Error al abrir el disco  FFFFFFFFF\n";
-    }
-    fseek(myFile, init, SEEK_SET);
-    fwrite(sb, sizeof(SuperBlock), 1, myFile);
+    // FILE * myFile;
+    // myFile = fopen (pathsuper,"rb+");
+    // if (myFile==NULL)
+    // {
+    //     cout<<"FFFFFFFFFFF  Error al abrir el disco  FFFFFFFFF\n";
+    // }
+    // fseek(myFile, init, SEEK_SET);
+    // fwrite(sb, sizeof(SuperBlock), 1, myFile);
     
-    fclose (myFile);
-    cout<<"\n todo bien\n";
+    // fclose (myFile);
+    // cout<<"\n todo bien\n";
     return ;
 }
 
@@ -274,7 +274,7 @@ void mount::desmontar(string idi){
     int contDisks = 0;
     bool existeDisco= false;
     while(partsMounted[contDisks]!=NULL){
-        cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
+        // cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
         if(partsMounted[contDisks]->num == stoi(s)){
             existeDisco = true;
             break;

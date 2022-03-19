@@ -83,7 +83,7 @@ MBR* rep::obtainMBR(char pathF[], string idi){
     int contDisks = 0;
     bool existeDisco= false;
     while(partsMounted[contDisks]!=NULL){
-        cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
+        // cout<<partsMounted[contDisks]->num <<" con "<< num<<endl;
         if(partsMounted[contDisks]->num == stoi(s)){
             existeDisco = true;
             
@@ -134,7 +134,7 @@ MBR* rep::obtainMBR(char pathF[], string idi){
 		while (!feof(myarchivo))
 		{
             cout<<"a"<<endl;
-            cout<<t1.id<<" con "<<id<<endl;
+            // cout<<t1.id<<" con "<<id<<endl;
             if(t1.id == id){
                 cout<<paths<<endl;
                 paths=t1.ruta;
@@ -366,9 +366,21 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
         //     }
         //     strcat(colors[i],"#bcf7c1");
         // }
+       
         part = disco->mbr_p[i];
         // if(strcmp((part.part_status , id)==0)
-        
+         bool externaesta=false;
+            for (size_t i = 0; i < extdelete.size(); i++)
+            {
+                
+                string temp = part.part_name;
+                // cout<<"comparando: "<< temp <<" con "<< extdelete[i]<<endl;
+                if(temp == extdelete[i]){
+                    externaesta=true;
+                    break;
+                }
+            }
+        if(externaesta) continue;
         if(part.part_status == '0') continue;
         
         
@@ -378,8 +390,7 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
         fputs("#37D134",myFile);
         
         fputs("\">",myFile);
-
-
+        cout<<"\n--------------------------------------";
         cout<<"particion "<<i<<endl;
         cout<<part.part_name<<endl;
         cout<<part.part_fit<<endl;
@@ -461,38 +472,77 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
             // fputs("REPORTE DE EBR'S",myFile);
             // fputs("</td></tr>\n",myFile);
             while(ebr!=NULL){
+                 bool externaesta2=false;
+                for (size_t i = 0; i < extdelete.size(); i++)
+                {
+                    
+                    string temp = ebr->part_name;
+                    // cout<<"comparando: "<< temp <<" con "<< extdelete[i]<<endl;
+                    if(temp == extdelete[i]){
+                        externaesta2=true;
+                        break;
+                    }
+                }
+                if(externaesta2){
+                    fputs("<tr><td colspan=\"3\">",myFile);
+                    fputs(ebr->part_name,myFile);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
                 
-                fputs("<tr><td colspan=\"3\">",myFile);
-                fputs(ebr->part_name,myFile);
-                fputs("</td></tr>\n",myFile);
-                fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
-            
-                fputs("<tr><td bgcolor=\"#F9A148\">part_status</td><td bgcolor=\"#F9A148\">",myFile);
-                fprintf(myFile, "%c", ebr->part_status);
-                fputs("</td></tr>\n",myFile);
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_status</td><td bgcolor=\"#F9A148\">",myFile);
+                    fputs("0",myFile);
+                    // fprintf(myFile, "%c", ebr->part_status);
+                    fputs("</td></tr>\n",myFile);
 
-                // fputs("<tr><td bgcolor=\"#fcc8c8\">part_type</td><td bgcolor=\"#fcc8c8\">",myFile);
-                // fprintf(myFile, "%c", ebr->pa);
-                // fputs("</td></tr>\n",myFile);
+                    // fputs("<tr><td bgcolor=\"#fcc8c8\">part_type</td><td bgcolor=\"#fcc8c8\">",myFile);
+                    // fprintf(myFile, "%c", ebr->pa);
+                    // fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_fit</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%c", ebr->part_fit);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_start",myFile);
+                    fputs("</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_start);
+                    fputs("</td></tr>\n",myFile);
                 
-                fputs("<tr><td bgcolor=\"#F9A148\">part_fit</td><td bgcolor=\"#F9A148\">",myFile);
-                fprintf(myFile, "%c", ebr->part_fit);
-                fputs("</td></tr>\n",myFile);
-                fputs("<tr><td bgcolor=\"#F9A148\">part_start",myFile);
-                fputs("</td><td bgcolor=\"#F9A148\">",myFile);
-                fprintf(myFile, "%d", ebr->part_start);
-                fputs("</td></tr>\n",myFile);
-            
-                fputs("<tr><td bgcolor=\"#F9A148\">part_size</td><td bgcolor=\"#F9A148\">",myFile);
-                fputs(&to_string(ebr->part_size)[0],myFile);
-                fputs("</td></tr>\n",myFile);
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_size</td><td bgcolor=\"#F9A148\">",myFile);
+                    fputs(&to_string(ebr->part_size)[0],myFile);
+                    fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_next</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_next);
+                    fputs("</td></tr>\n",myFile);
+                }else{
+                    fputs("<tr><td colspan=\"3\">",myFile);
+                    fputs(ebr->part_name,myFile);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
                 
-                fputs("<tr><td bgcolor=\"#F9A148\">part_next</td><td bgcolor=\"#F9A148\">",myFile);
-                fprintf(myFile, "%d", ebr->part_next);
-                fputs("</td></tr>\n",myFile);
-                
-                
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_status</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%c", ebr->part_status);
+                    fputs("</td></tr>\n",myFile);
 
+                    // fputs("<tr><td bgcolor=\"#fcc8c8\">part_type</td><td bgcolor=\"#fcc8c8\">",myFile);
+                    // fprintf(myFile, "%c", ebr->pa);
+                    // fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_fit</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%c", ebr->part_fit);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_start",myFile);
+                    fputs("</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_start);
+                    fputs("</td></tr>\n",myFile);
+                
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_size</td><td bgcolor=\"#F9A148\">",myFile);
+                    fputs(&to_string(ebr->part_size)[0],myFile);
+                    fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_next</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_next);
+                    fputs("</td></tr>\n",myFile);
+                }
 
                 if(ebr->part_next!=-1){
 
@@ -632,7 +682,112 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
             fputs("\">",myFile);
             fprintf(myFile, "%s", part.part_name);
             fputs("</td></tr>\n",myFile);
+            char* pathg=&rutaglobal[0];
+            EBR *ebr = primerEBR(disco,pathg);
+            // cout<<"corrido";
+            // string nombreNodo = "tbl"+to_string(i+2);
+            // fputs(nombreNodo.c_str(),myFile);
+            // fputs(" [\nshape=plaintext\n label=<\n", myFile);
+            
+            // fputs("<table border='0' cellborder='1' cellspacing='0'>\n",myFile);
+            // fputs("<tr><td colspan=\"3\">",myFile);
+            // fputs("REPORTE DE EBR'S",myFile);
+            // fputs("</td></tr>\n",myFile);
+            while(ebr!=NULL){
+                 bool externaesta3=false;
+                for (size_t i = 0; i < extdelete.size(); i++)
+                {
+                    
+                    string temp = ebr->part_name;
+                    // cout<<"comparando: "<< temp <<" con "<< extdelete[i]<<endl;
+                    if(temp == extdelete[i]){
+                        externaesta3=true;
+                        break;
+                    }
+                }
+                if(externaesta3){
+                    fputs("<tr><td colspan=\"3\">",myFile);
+                    fputs(ebr->part_name,myFile);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
+                
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_status</td><td bgcolor=\"#F9A148\">",myFile);
+                    fputs("0",myFile);
+                    // fprintf(myFile, "%c", ebr->part_status);
+                    fputs("</td></tr>\n",myFile);
 
+                    // fputs("<tr><td bgcolor=\"#fcc8c8\">part_type</td><td bgcolor=\"#fcc8c8\">",myFile);
+                    // fprintf(myFile, "%c", ebr->pa);
+                    // fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_fit</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%c", ebr->part_fit);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_start",myFile);
+                    fputs("</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_start);
+                    fputs("</td></tr>\n",myFile);
+                
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_size</td><td bgcolor=\"#F9A148\">",myFile);
+                    fputs(&to_string(ebr->part_size)[0],myFile);
+                    fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_next</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_next);
+                    fputs("</td></tr>\n",myFile);
+                }else{
+                    fputs("<tr><td colspan=\"3\">",myFile);
+                    fputs(ebr->part_name,myFile);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<th><td>Nombre</td><td>Valor</td></th>\n",myFile);
+                
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_status</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%c", ebr->part_status);
+                    fputs("</td></tr>\n",myFile);
+
+                    // fputs("<tr><td bgcolor=\"#fcc8c8\">part_type</td><td bgcolor=\"#fcc8c8\">",myFile);
+                    // fprintf(myFile, "%c", ebr->pa);
+                    // fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_fit</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%c", ebr->part_fit);
+                    fputs("</td></tr>\n",myFile);
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_start",myFile);
+                    fputs("</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_start);
+                    fputs("</td></tr>\n",myFile);
+                
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_size</td><td bgcolor=\"#F9A148\">",myFile);
+                    fputs(&to_string(ebr->part_size)[0],myFile);
+                    fputs("</td></tr>\n",myFile);
+                    
+                    fputs("<tr><td bgcolor=\"#F9A148\">part_next</td><td bgcolor=\"#F9A148\">",myFile);
+                    fprintf(myFile, "%d", ebr->part_next);
+                    fputs("</td></tr>\n",myFile);
+                }
+
+                if(ebr->part_next!=-1){
+
+                    FILE *myFile = fopen(pathg,"rb+");
+                    if(myFile==NULL){
+                        cout<<"FFFFFFFFFFFFF   Error al abrir el archivo   FFFFFFFFFFFFF\n";
+                        ebr= NULL;
+                    }
+                    EBR *ebrtemp = (EBR*)malloc(sizeof(EBR));
+
+                    fseek(myFile, ebr->part_next, SEEK_SET);
+                    fread(ebrtemp, sizeof(EBR), 1, myFile);
+                    fclose(myFile);
+                    // cout<<"comparte"<<endl;
+                    ebr =ebrtemp;
+
+                }else{
+                    ebr = NULL;
+                }
+                // i++;
+            }
+            // fputs("</table>\n",myFile);
+            // fputs(">];\n", myFile);
             
         }
     }
@@ -649,6 +804,7 @@ void rep::mbr(string nombres, string idi, string paths,string path_reports){
     string command = "dot -T"+tipodesalida+" REPORTE_MBR_202000194_"+idi+".dot -o \""+pathString+"\"";
     system(command.c_str());
     cout<<"\n Generando la imagen..."<<endl;
+    sleep(2);
     cout<<"\n Se ha generado el Reporte de MBR sin problemas, vaya a: \n\t\t"<<pathString<<"  para verlo"<<endl;
     // i++;
     }else{
@@ -1121,7 +1277,7 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
             {
                 
                 string temp = part.part_name;
-                cout<<"comparando: "<< temp <<" con "<< extdelete[i]<<endl;
+                // cout<<"comparando: "<< temp <<" con "<< extdelete[i]<<endl;
                 if(temp == extdelete[i]){
                     externaesta=true;
                     break;
@@ -1168,12 +1324,12 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
                     EBR *ebr = primerEBR(disco,pathg);
                     int porcentajeLogicas=0;
                     while(ebr!=NULL){
-                        cout<<" recorriendo las logicas del ebr"<<ebr->part_name<<endl;
+                        // cout<<" recorriendo las logicas del ebr:  "<<ebr->part_name<<endl;
                         bool externaesta2=false;
                         for (size_t i = 0; i < extdelete.size(); i++)
                         {
                             string temp2 = ebr->part_name ;
-                            cout<<"comparando: "<< temp2 <<" con "<< extdelete[i]<<endl;
+                            // cout<<"comparando: "<< temp2 <<" con "<< extdelete[i]<<endl;
                             if(temp2 == extdelete[i]){
                                 externaesta2=true;
                                 break;
@@ -1277,72 +1433,72 @@ void rep::disk(string nombres, string idi, string paths,string path_reports){
                     fputs("%", myFile);
                 }
             }
-            // else
-            // {
-            //     if (i == 0)
-            //     {
+            else
+            {
+                if (i == 0)
+                {
                     
-            //         int tota = 1;
-            //         for (int j = 1; j < 4; j++)
-            //         {
-            //             if (disco->mbr_p[j].part_status == '1')
-            //             {
-            //                 int espacio_disp = disco->mbr_p[j].part_start - sizeof(disco);
+                    int tota = 1;
+                    for (int j = 1; j < 4; j++)
+                    {
+                        if (disco->mbr_p[j].part_status == '1')
+                        {
+                            int espacio_disp = disco->mbr_p[j].part_start - sizeof(disco);
 
-            //                 porcentaje = espacio_disp / (disco->mbr_tamano / 100);
-            //                 porcentajeTotal += porcentaje;
-            //                 continua = true;
-            //                 break;
-            //             }
-            //             else
-            //             {
-            //                 tota += 1;
-            //             }
-            //         }
+                            porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+                            porcentajeTotal += porcentaje;
+                            continua = true;
+                            break;
+                        }
+                        else
+                        {
+                            tota += 1;
+                        }
+                    }
 
-            //         if (tota == 4)
-            //         {
-            //             break;
-            //         }
-            //         fputs("| Libre \\n ", myFile);
-            //         fprintf(myFile, "%d", porcentaje);
-            //         fputs("%", myFile);
+                    if (tota == 4)
+                    {
+                        break;
+                    }
+                    fputs("| Libre \\n ", myFile);
+                    fprintf(myFile, "%d", porcentaje);
+                    fputs("%", myFile);
                     
-            //     }
-            //     else
-            //     {
-            //         if (continua == false)
-            //         {
+                }
+                else
+                {
+                    if (continua == false)
+                    {
 
-            //             if (i < 3)
-            //             {
-            //                 int inicio = disco->mbr_p[i - 1].part_start + disco->mbr_p[i - 1].part_size;
-            //                 int espacio_disp = disco->mbr_tamano - inicio;
+                        if (i < 3)
+                        {
+                            int inicio = disco->mbr_p[i - 1].part_start + disco->mbr_p[i - 1].part_size;
+                            int espacio_disp = disco->mbr_tamano - inicio;
 
-            //                 porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+                            porcentaje = espacio_disp / (disco->mbr_tamano / 100);
 
 
-            //                 for (int j = i; j < 4; j++)
-            //                 {
-            //                     if (disco->mbr_p[j].part_status == '1')
-            //                     {
-            //                         espacio_disp = disco->mbr_p[j].part_start - inicio;
-            //                         porcentaje = espacio_disp / (disco->mbr_tamano / 100);
-            //                         continua = true;
-            //                         break;
-            //                     }
-            //                 }
+                            for (int j = i; j < 4; j++)
+                            {
+                                if (disco->mbr_p[j].part_status == '1')
+                                {
+                                    espacio_disp = disco->mbr_p[j].part_start - inicio;
+                                    porcentaje = espacio_disp / (disco->mbr_tamano / 100);
+                                    continua = true;
+                                    break;
+                                }
+                            }
 
-            //                 porcentajeTotal += porcentaje;
-            //                 fputs("| Libre \\n ", myFile);
-            //                 fprintf(myFile, "%d", 100-totPrimExt);
-            //                 fputs("%", myFile);
+                            porcentajeTotal += porcentaje;
+                            fputs("| Libre \\n ", myFile);
+                            fprintf(myFile, "%d", 100-totPrimExt);
+                            fputs("%", myFile);
                             
-            //             }
+                        }
                         
-            //         }
-            //     }
-            // }
+                    }
+                }
+            }
 
 
         }

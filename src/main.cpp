@@ -438,8 +438,9 @@ void analizer(string mylines) //todo este seria el analizador
 				// }
 				if (mycommand == "mkdisk")
                 {
-					cout<<"\n\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKDISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKDISK. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
                     mkdisk *disco = new mkdisk();
+					bool no =false;
 					// cout<<"comandos.size():  "<<comandos.size()<<endl;
                     for (size_t j = 1; j < comandos.size(); j++) //!Recorro por toda mi linea
                     {
@@ -480,13 +481,16 @@ void analizer(string mylines) //todo este seria el analizador
 						
                         else
                         {
+							no=true;
                             cout << "\nEl comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
-
-                    disco->createDisk(disco);
+					if(!no){
+						disco->createDisk(disco);
+					}
+                    
                 }else if(mycommand == "rmdisk"){
-					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.RMDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
+					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.RMDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n "<<endl;
                     removedisk *disco = new removedisk();
 					/*Este parámetro elimina un archivo que representa a un disco duro mostrando
 						un mensaje de confirmación para eliminar. */
@@ -541,9 +545,9 @@ void analizer(string mylines) //todo este seria el analizador
 						Deberá mostrar un error si no se pudo realizar la operación solicitada sobre la
 						partición, especificando por qué razón no pudo crearse (Por espacio, por
 						restricciones de particiones, etc.).*/
-					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.FDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ "<<endl;
+					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.FDISK.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████ \n"<<endl;
                     Fdisk *disco = new Fdisk();
-
+					bool auch= true;
                     for (size_t j = 1; j < comandos.size(); j++)
                     {
                         vector<string> comando = splitSimulated5(comandos[j], '=');
@@ -589,25 +593,29 @@ void analizer(string mylines) //todo este seria el analizador
                         }
                         else
                         {
+							auch=false;
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
-
-                    disco->adminPartition(disco);
+					if(auch){
+						disco->adminPartition(disco);
+					}
+                    
 					
 				
 				}else if(mycommand == "pause"){
-					cout<<"\n\n██████████████████████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.PAUSE.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓███████████████████████ "<<endl;
+					cout<<"\n\n██████████████████████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.PAUSE.░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓███████████████████████\n "<<endl;
                     string ps;
 					cout<<"Presione una tecla y enter para continuar....";
 							
                     cin >> ps;
                 
 				}else if(mycommand == "mount"){
-					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
 					// MOUNT montacion;
 					mount *disco = new mount();
                     string ruta;
+					bool f=true;
                     for (size_t k = 1; k < comandos.size(); k++)
                     {
                         vector<string> comando = splitSimulated5(comandos[k], '=');
@@ -621,16 +629,21 @@ void analizer(string mylines) //todo este seria el analizador
                         }
                         else
                         {
+							f=false;
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
-                    disco->montar(disco);
+					if(f){
+						disco->montar(disco);
+					}
+                    
                     
 
 				}else if(mycommand == "unmount"){
-					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.UNMOUNT. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
 					mount *disco = new mount();
                     string idi="";
+					bool f=false;
                     for (size_t k = 1; k < comandos.size(); k++)
                     {
                         vector<string> comando = splitSimulated5(comandos[k], '=');
@@ -641,6 +654,7 @@ void analizer(string mylines) //todo este seria el analizador
                         }
                         else
                         {
+							f=true;
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
@@ -648,15 +662,19 @@ void analizer(string mylines) //todo este seria el analizador
 					idi.erase(std::remove(idi.begin(), idi.end(), '\n'), idi.end());
 					idi.erase(std::remove(idi.begin(), idi.end(), '\r'), idi.end());
 					// char myChars = idi.toCharArray();
-					disco->desmontar(idi);
+					if(!f){
+						disco->desmontar(idi);
+					}
+					
                     // disco->desmontar(idi);
 				}else if(mycommand == "mkfs"){
-					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████"<<endl;
+					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.MKFS. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
 					// Este comando realiza un formateo completo de la partición, se formateará como
 					// ext2 por defecto si en caso el parámetro fs no está definido.
 					// También creará un archivo en la raíz llamado users.txt que tendrá los usuarios y 
 					// contraseñas del sistema de archivos.
 					mkfs *disco = new mkfs();
+					bool f=false;
                     for (size_t j = 1; j < comandos.size(); j++)
                     {
                         vector<string> comando = splitSimulated5(comandos[j], '=');
@@ -680,12 +698,16 @@ void analizer(string mylines) //todo este seria el analizador
                         }
                         else
                         {
+							f=true;
                             cout << "El comando: " << comando[0] << " es un comando invalido, favor revisarlo." << endl;
                         }
                     }
 					try
 					{
-						disco->formato(disco);
+						if(!f){
+							disco->formato(disco);
+						}
+						
 					}
 					catch(...)
 					{
@@ -700,11 +722,11 @@ void analizer(string mylines) //todo este seria el analizador
 					parámetros:*/
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.Login. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
 					cout<<" 		Iniciando sesion ";
-					for (int w = 1; w < 5; w++)
+					for (int w = 1; w < 3; w++)
                     {
 						cout<<" * ";
 						cout<<endl;
-						sleep(0.5);
+						sleep(1);
 					}
 					cout<<"\n";
 					login *disco = new login();
@@ -758,10 +780,10 @@ void analizer(string mylines) //todo este seria el analizador
 					parámetros:*/
 					cout<<"\n███████▓▓▓▓▒▒▒▒▒░░░░░░░░░░░.Logout. ░░░░░░░░░░░░▒▒▒▒▒▒▓▓▓▓▓████████\n"<<endl;
 					cout<<" 		Cerrando sesion ";
-					for (int w = 1; w < 5; w++)
+					for (int w = 1; w < 3; w++)
                     {
 						cout<<" * ";
-						sleep(0.5);
+						sleep(1.5);
 					}
 					cout<<"\n";
 					login *disco = new login();
